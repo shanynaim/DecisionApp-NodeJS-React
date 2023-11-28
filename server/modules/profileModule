@@ -1,0 +1,16 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const profileModule = new Schema({
+  Openness: { type: Number, required: true, unique: false },
+  Conscientiousness: { type: Number, required: true, unique: false },
+  Extraversion: { type: Number, required: true, unique: false },
+  Agreeableness: { type: Number, required: true, unique: false },
+  Neuroticism: { type: Number, required: true, unique: false },
+
+  user_id: {
+    type: mongoose.Schema.types.ObjectId,
+    required: true,
+    ref: "user",
+  },
+});
