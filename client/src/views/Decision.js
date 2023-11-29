@@ -16,17 +16,11 @@ function Decision() {
   });
   const [optionTwo, setOptionTwo] = useState({
     name: "",
-    scores: {
-      openness: 0,
-      conscientiousness: 0,
-      extraversion: 0,
-      agreeableness: 0,
-      neuroticism: 0,
-    },
+    scores: {},
   });
 
   const setOptionChange = (e) => {
-    if (e.target.name === "1") {
+    if (e.target.id === "1") {
       const optionCopy = { ...optionOne };
       optionCopy[e.target.name] = e.target.value;
 
@@ -41,19 +35,6 @@ function Decision() {
   const startSubmit = (e) => {
     e.preventDefault();
     setStart(true);
-  };
-
-  const questionSubmit = (e) => {
-    e.preventDefault();
-    let answers = [];
-    console.log(
-      e.target.childNodes.forEach((e) => {
-        if (e.nodeName === "INPUT" && e.checked) answers.push(e.value);
-      })
-    );
-    console.log(answers);
-    //set the score in the right place
-    e.target.reset();
   };
 
   return (
@@ -73,10 +54,10 @@ function Decision() {
       ) : (
         <div>
           <Questions
-            questionSubmit={questionSubmit}
-            setOptionChange={setOptionChange}
-            optionOneName={optionOne.name}
-            optionTwoName={optionTwo.name}
+            optionOne={optionOne}
+            optionTwo={optionTwo}
+            setOptionOne={setOptionOne}
+            setOptionTwo={setOptionTwo}
           />
         </div>
       )}
