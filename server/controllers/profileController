@@ -1,0 +1,44 @@
+const Profile = require("../modules/profileModule");
+const User = require("../modules/userModule");
+const utils = require("../utils/helperMethods");
+const mongoose = require("mongoose");
+
+// const e = require("express");
+
+const hey = (req, res) => {
+  console.log(req.method, req.url);
+};
+const signUpUser = async (req, res) => {
+  debugger;
+  const openness = "openness",
+    conscientiousness = "conscientiousness",
+    extraversion = "extraversion",
+    agreeableness = "agreeableness",
+    neuroticism = "neuroticism";
+
+  const { userName, userPassword, profile } = req.body;
+
+  try {
+    const newUser = await User.create({
+      name: userName,
+      password: userPassword,
+    });
+
+    const newProfile = await Profile.create({
+      [openness]: profile[openness],
+      [conscientiousness]: profile[conscientiousness],
+      [extraversion]: profile[extraversion],
+      [agreeableness]: profile[agreeableness],
+      [neuroticism]: profile[neuroticism],
+
+      user_id: newUser._id,
+    });
+
+    res.send(new utils.Response(true, newProfile._id));
+  } catch (error) {
+    console.log(error);
+    res.send("error, see console log for details");
+  }
+};
+
+module.exports = { signUpUser, hey };

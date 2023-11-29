@@ -1,11 +1,35 @@
+/*******/
 const cors = require("cors");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-// const categoriesRoute = require("./routes/categoryRoute");
-// const productsRoute = require("./routes/productRoute");
+const decisionBotRoute = require("./routes/decisionBotRoute");
+const profileRoute = require("./routes/profileRoute");
 mongoose.set("debug", true);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+
+const port = 4050;
+
+app.use("/profile", profileRoute);
+app.use("/decision", decisionBotRoute);
+// app.use("/product", productsRoute);
+
+async function connecting() {
+  try {
+    await mongoose.connect(
+      "mongodb+srv://shany215sn:9i6dpOi2qYODeMxp@cluster0.fk1u4fq.mongodb.net/decisionApp?retryWrites=true&w=majority"
+    );
+    console.log("connected to the db");
+  } catch (error) {
+    console.log("error in db conection");
+  }
+}
+
+connecting().then(() => {
+  app.listen(port, () => {
+    console.log(`listen on port ${port}`);
+  });
+});
