@@ -1,8 +1,0 @@
-const express = require("express"),
-  router = express.Router(),
-  controller = require("../controllers/profileController");
-
-router.get("/", controller.hey);
-router.post("/signup", controller.signUpUser);
-
-module.exports = router;

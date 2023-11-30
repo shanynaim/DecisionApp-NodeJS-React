@@ -1,0 +1,117 @@
+require("dotenv").config();
+const Profile = require("../modules/profileModule");
+const User = require("../modules/userModule");
+const utils = require("../utils/helperMethods");
+const mongoose = require("mongoose");
+const argon2 = require("argon2");
+const jwt = require("jsonwebtoken");
+const validator = require("validator");
+const jwt_secret = process.env.JWT_SECRET;
+
+const hey = (req, res) => {
+  console.log(req.method, req.url);
+};
+
+const signIn = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.send(
+      new utils.Response(false, { message: "All fields are required" })
+    );
+  }
+  if (!validator.isEmail(email)) {
+    return res.send(new utils.Response(false, { message: "Invalid email" }));
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.send(
+        new utils.Response(false, { message: "Invalid user provided" })
+      );
+    }
+    const match = await argon2.verify(user.password, password);
+
+    if (match) {
+      const token = jwt.sign({ userEmail: user.email }, jwt_secret, {
+        expiresIn: "1h",
+      });
+      res.send(
+        new utils.Response(true, {
+          message: `welcome back ${user.name}`,
+          token: token,
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error);
+    res.send(new utils.Response(false, { message: error }));
+  }
+};
+
+const signUp = async (req, res) => {
+  const openness = "openness",
+    conscientiousness = "conscientiousness",
+    extraversion = "extraversion",
+    agreeableness = "agreeableness",
+    neuroticism = "neuroticism";
+
+  const { name, email, password, profile } = req.body;
+  if (!name || !email || !password || !profile) {
+    return res.send(new utils.Response(false, "All fields required"));
+  }
+  if (!validator.isEmail(email)) {
+    return res.send(new utils.Response(false, { message: "Invalid email" }));
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.send(
+        new utils.Response(false, { message: "User already exists" })
+      );
+    }
+    const hash = await argon2.hash(password);
+    console.log("hash ==>", hash);
+
+    const newUser = await User.create({
+      name: name,
+      email: email,
+      password: hash,
+    });
+
+    const newProfile = await Profile.create({
+      [openness]: profile[openness],
+      [conscientiousness]: profile[conscientiousness],
+      [extraversion]: profile[extraversion],
+      [agreeableness]: profile[agreeableness],
+      [neuroticism]: profile[neuroticism],
+
+      user_id: newUser._id,
+    });
+
+    res.send(
+      new utils.Response(true, {
+        message: "User created",
+        id: newProfile._id,
+      }) /*not sure i need this user_id*/
+    );
+  } catch (error) {
+    console.log(error);
+    res.send(new utils.Response(false, { message: error }));
+  }
+};
+
+function verifyToken(req, res) {
+  debugger;
+  console.log(req.headers.authorization);
+  const token = req.headers.authorization;
+  jwt.verify(token, jwt_secret, (err, succ) => {
+    err
+      ? res.send(new utils.Response(false, { message: "Token is corrupted" }))
+      : res.send(new utils.Response(true, { message: succ }));
+  });
+}
+
+module.exports = { signUp, hey, signIn, verifyToken };

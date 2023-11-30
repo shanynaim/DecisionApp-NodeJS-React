@@ -4,7 +4,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const decisionBotRoute = require("./routes/decisionBotRoute");
-const profileRoute = require("./routes/profileRoute");
+const profileRoute = require("./routes/usersRoute");
 mongoose.set("debug", true);
 
 app.use(express.urlencoded({ extended: true }));
@@ -13,7 +13,7 @@ app.use(cors());
 
 const port = 4050;
 
-app.use("/profile", profileRoute);
+app.use("/users", profileRoute);
 app.use("/decision", decisionBotRoute);
 // app.use("/product", productsRoute);
 
