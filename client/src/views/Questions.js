@@ -6,7 +6,7 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
   const [questionsArray, setQuestionsArray] = useState(Questions);
   const [currentIndex, setCurretIndex] = useState(questionsArray.length - 1);
 
-  const [question, setQuestion] = useState("null");
+  const [question, setQuestion] = useState(null);
   const [traitsScoreOne, setTraitsScoreOne] = useState([]);
   const [traitsScoreTwo, setTraitsScoreTwo] = useState([]);
 
@@ -16,7 +16,7 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
   });
 
   function GetQuestion() {
-    debugger;
+    // debugger;
     const random = Math.floor(Math.random() * currentIndex);
 
     [questionsArray[currentIndex], questionsArray[random]] = [
@@ -72,7 +72,6 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
   };
 
   const sumAllTraits = (traitsScore, setOption) => {
-    debugger;
     console.log(traitsScore);
     let results = {
       openness: 0,
@@ -88,12 +87,12 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
 
       results[key] += Number(value);
     });
-
+    debugger;
     setOption(results);
   };
 
   useEffect(() => {
-    debugger;
+    // debugger;
     if (question) {
       setTraitsScoreOne([
         ...traitsScoreOne,
@@ -109,7 +108,6 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
   }, [question]);
 
   useEffect(() => {
-    debugger;
     if (currentIndex === -1) {
       sumAllTraits(traitsScoreOne, setOptionOne);
       sumAllTraits(traitsScoreTwo, setOptionTwo);

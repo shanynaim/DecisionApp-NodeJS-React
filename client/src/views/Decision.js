@@ -36,7 +36,7 @@ function Decision() {
     e.preventDefault();
     setStart(true);
   };
-  debugger;
+
   return (
     <>
       {!start ? (
