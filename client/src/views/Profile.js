@@ -16,14 +16,13 @@ function Profile({ route }) {
     neuroticism: 0,
   });
   const { state } = useLocation();
-  const { name, email, password } = state;
+  const { id } = state;
 
   const SubmitUserData = async () => {
     try {
-      const res = await axios.post(`${URL}/users/signup`, {
-        name: name,
-        email: email,
-        password: password,
+      debugger;
+      const res = await axios.post(`${URL}/users/signup/profile`, {
+        id: id,
         profile: profile,
       });
 
@@ -32,7 +31,7 @@ function Profile({ route }) {
       if (res.data.ok) {
         setTimeout(() => {
           navigate("/signin");
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       console.log(error);
@@ -41,9 +40,7 @@ function Profile({ route }) {
 
   return (
     <>
-      <h1>
-        in profiling of {name} email {email} password {password}
-      </h1>
+      <h1>in profiling</h1>
       <button onClick={SubmitUserData}>submit</button>
 
       <h4>{message}</h4>

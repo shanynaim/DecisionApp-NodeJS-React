@@ -2,8 +2,8 @@ const express = require("express"),
   router = express.Router(),
   controller = require("../controllers/usersController");
 
-router.get("/", controller.hey);
 router.post("/signup", controller.signUp);
+router.post("/signup/profile", controller.profile);
 router.post("/signin", controller.signIn);
 router.post("/verify_token", controller.verifyToken);
 module.exports = router;

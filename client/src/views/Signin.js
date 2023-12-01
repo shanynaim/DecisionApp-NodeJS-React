@@ -25,13 +25,14 @@ function Signin({ signIn }) {
         email: form.email,
         password: form.password,
       });
+
       console.log(response);
       setMessage(response.data.data.message);
       if (response.data.ok) {
         setTimeout(() => {
           signIn(response.data.data.token);
           navigate("/decision");
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       console.log(error);

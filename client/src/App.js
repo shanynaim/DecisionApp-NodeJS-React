@@ -23,8 +23,7 @@ function App() {
 
           const response = await axios.post(`${URL}/users/verify_token`);
 
-          debugger;
-          return response.data.ok ? signIn(token) : logout();
+          return response.data.ok ? signIn(token) : signout();
         }
       } catch (error) {
         console.log(error);
@@ -33,7 +32,7 @@ function App() {
     verify_token();
   }, [token]);
 
-  const logout = () => {
+  const signout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setIsLoggedIn(false);
@@ -54,12 +53,13 @@ function App() {
 
     localStorage.setItem("token", newToken);
     localStorage.setItem("user", JSON.stringify(user));
+    setIsLoggedIn(true);
   };
 
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        <Navbar signOut={signout} />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -71,7 +71,10 @@ function App() {
             element={isLoggedIn ? <Decision /> : <Signup />}
           />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/decision" element={<Decision />} />
+          <Route
+            path="/decision"
+            element={isLoggedIn ? <Decision /> : <Home />}
+          />
         </Routes>
       </Router>
     </div>

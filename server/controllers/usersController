@@ -8,10 +8,6 @@ const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const jwt_secret = process.env.JWT_SECRET;
 
-const hey = (req, res) => {
-  console.log(req.method, req.url);
-};
-
 const signIn = async (req, res) => {
   const { email, password } = req.body;
 
@@ -35,12 +31,18 @@ const signIn = async (req, res) => {
 
     if (match) {
       const token = jwt.sign({ userEmail: user.email }, jwt_secret, {
-        expiresIn: "1h",
+        expiresIn: "365d",
       });
       res.send(
         new utils.Response(true, {
           message: `welcome back ${user.name}`,
           token: token,
+        })
+      );
+    } else {
+      res.send(
+        new utils.Response(false, {
+          message: `password incorrect`,
         })
       );
     }
@@ -51,20 +53,17 @@ const signIn = async (req, res) => {
 };
 
 const signUp = async (req, res) => {
-  const openness = "openness",
-    conscientiousness = "conscientiousness",
-    extraversion = "extraversion",
-    agreeableness = "agreeableness",
-    neuroticism = "neuroticism";
-
-  const { name, email, password, profile } = req.body;
-  if (!name || !email || !password || !profile) {
-    return res.send(new utils.Response(false, "All fields required"));
+  const { name, email, password1, password2 } = req.body;
+  if (!name || !email || !password1 || !password2) {
+    res.send(new utils.Response(false, "All fields required"));
   }
   if (!validator.isEmail(email)) {
-    return res.send(new utils.Response(false, { message: "Invalid email" }));
+    res.send(new utils.Response(false, { message: "Invalid email" }));
   }
 
+  if (password1 !== password2) {
+    res.send(new utils.Response(false, { message: "passwords dont match!" }));
+  }
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -72,7 +71,7 @@ const signUp = async (req, res) => {
         new utils.Response(false, { message: "User already exists" })
       );
     }
-    const hash = await argon2.hash(password);
+    const hash = await argon2.hash(password1);
     console.log("hash ==>", hash);
 
     const newUser = await User.create({
@@ -81,30 +80,45 @@ const signUp = async (req, res) => {
       password: hash,
     });
 
-    const newProfile = await Profile.create({
+    res.send(
+      new utils.Response(true, {
+        message: "User created",
+        id: newUser._id,
+      })
+    );
+  } catch (error) {
+    console.log(error);
+    res.send(new utils.Response(false, { message: "error" + error }));
+  }
+};
+
+const profile = async (req, res) => {
+  const { profile, id } = req.body;
+  if (!profile || !id) {
+    res.send(new utils.Response(false, "All fields required"));
+  }
+  const openness = "openness",
+    conscientiousness = "conscientiousness",
+    extraversion = "extraversion",
+    agreeableness = "agreeableness",
+    neuroticism = "neuroticism";
+  try {
+    await Profile.create({
       [openness]: profile[openness],
       [conscientiousness]: profile[conscientiousness],
       [extraversion]: profile[extraversion],
       [agreeableness]: profile[agreeableness],
       [neuroticism]: profile[neuroticism],
 
-      user_id: newUser._id,
+      user_id: id,
     });
-
-    res.send(
-      new utils.Response(true, {
-        message: "User created",
-        id: newProfile._id,
-      }) /*not sure i need this user_id*/
-    );
+    res.send(new utils.Response(true, { message: "profile created!" }));
   } catch (error) {
     console.log(error);
-    res.send(new utils.Response(false, { message: error }));
+    res.send(new utils.Response(false, { message: "error" + error }));
   }
 };
-
 function verifyToken(req, res) {
-  debugger;
   console.log(req.headers.authorization);
   const token = req.headers.authorization;
   jwt.verify(token, jwt_secret, (err, succ) => {
@@ -114,4 +128,4 @@ function verifyToken(req, res) {
   });
 }
 
-module.exports = { signUp, hey, signIn, verifyToken };
+module.exports = { signUp, signIn, verifyToken, profile };

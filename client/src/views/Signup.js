@@ -1,12 +1,14 @@
+import axios from "axios";
 import { useState } from "react";
-
+import URL from "../utils/config";
 import { useNavigate } from "react-router-dom";
+
 function Signup() {
   const [message, setMessage] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
-    password: "",
+    password1: "",
     password2: "",
   });
   const changeForm = (e) => {
@@ -20,18 +22,23 @@ function Signup() {
   const submitForm = async (e) => {
     e.preventDefault();
 
-    if (form.password === form.password2) {
+    const response = await axios.post(`${URL}/users/signup`, {
+      name: form.name,
+      email: form.email,
+      password1: form.password1,
+      password2: form.password2,
+    });
+
+    setMessage(response.data.data.message);
+
+    if (response.data.ok) {
       setTimeout(() => {
         navigate("/profile", {
           state: {
-            name: form.name,
-            email: form.email,
-            password: form.password,
+            id: response.data.data.id,
           },
         });
-      }, 2000);
-    } else {
-      setMessage("Passwords must match!");
+      }, 1000);
     }
   };
   return (
@@ -41,13 +48,13 @@ function Signup() {
       <label>Email</label>
       <input name="email" />
       <label>Password</label>
-      <input name="password" />
+      <input name="password1" />
 
       <label>Repeat password</label>
       <input name="password2" />
 
       <button>Sign Up</button>
-      {message.length > 0 && <div>{message}</div>}
+      <div>{message}</div>
     </form>
   );
 }
