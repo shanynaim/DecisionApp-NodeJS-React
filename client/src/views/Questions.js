@@ -6,7 +6,7 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
   const [questionsArray, setQuestionsArray] = useState(Questions);
   const [currentIndex, setCurretIndex] = useState(questionsArray.length - 1);
 
-  const [question, setQuestion] = useState(null);
+  const [question, setQuestion] = useState("null");
   const [traitsScoreOne, setTraitsScoreOne] = useState([]);
   const [traitsScoreTwo, setTraitsScoreTwo] = useState([]);
 
@@ -119,7 +119,7 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
   return (
     <>
       {question && currentIndex > -1 ? (
-        <form onChange={traitCalculation}>
+        <form onSubmit={questionSubmit} onChange={traitCalculation}>
           <h2>{question.question}</h2>
           <h3>{optionOne.name}</h3>
           {renderRadioButtons("valueOne")}
