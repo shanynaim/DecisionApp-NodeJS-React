@@ -18,7 +18,9 @@ function Profile({ route }) {
   const { state } = useLocation();
   const { id } = state;
 
-  const SubmitUserData = async () => {
+  const SubmitUserData = async (e) => {
+    e.preventDeafult();
+
     try {
       debugger;
       const res = await axios.post(`${URL}/users/signup/profile`, {

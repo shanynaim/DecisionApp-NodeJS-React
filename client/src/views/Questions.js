@@ -11,8 +11,8 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
   const [traitsScoreTwo, setTraitsScoreTwo] = useState([]);
 
   const [selectedValue, setSelectedValue] = useState({
-    valueOne: "3",
-    valueTwo: "3",
+    valueOne: null,
+    valueTwo: null,
   });
 
   function GetQuestion() {
@@ -23,23 +23,17 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
       questionsArray[random],
       questionsArray[currentIndex],
     ];
-    setQuestion(questionsArray[currentIndex]);
+
+    let tmp = questionsArray[currentIndex];
+
     setCurretIndex(currentIndex - 1);
+    setQuestion(tmp);
   }
 
   function traitCalculation(e) {
+    // debugger;
     const score = Number(e.target.value);
-    // if (e.target.name === "1") {
-    //   setTraitsScoreOne([...traitsScoreOne, { [question.trait]: score }]);
-    //   // traitsScoreOne[question.trait] += add;
-    //   console.log(question);
-    // console.log(traitsScoreOne);
-    // console.log(traitsScoreTwo);
-    // } else {
-    //   setSelectedValue(score);
-    //   setTraitsScoreTwo([...traitsScoreTwo, { [question.trait]: score }]);
-    // console.log(optionTwo);
-    // traitsScoreTwo[question.trait] += add;
+
     let copy = { ...selectedValue };
     copy[e.target.name] = score;
     setSelectedValue(copy);
@@ -48,30 +42,11 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
   const questionSubmit = (e) => {
     e.preventDefault();
 
-    // console.log(e);
-
-    // setOptionOne((prevOptionOne) => ({
-    //   name: prevOptionOne.name,
-    //   score: traitsScoreOne,
-    // }));
-    // setOptionTwo((prevOptionTwo) => ({
-    //   name: prevOptionTwo.name,
-    //   score: traitsScoreTwo,
-    // };
-    // console.log(optionOne, optionTwo);
-    // let answers = [];
-    // console.log(
-    //   e.target.childNodes.forEach((e) => {
-    //     if (e.nodeName === "INPUT" && e.checked) answers.push(e.value);
-    //   })
-    // );
-    // console.log(answers);
-    //set the score in the right place
-
     e.target.reset();
   };
 
   const sumAllTraits = (traitsScore, setOption) => {
+    debugger;
     console.log(traitsScore);
     let results = {
       openness: 0,
@@ -87,13 +62,13 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
 
       results[key] += Number(value);
     });
-    debugger;
+
     setOption(results);
   };
 
   useEffect(() => {
     // debugger;
-    if (question) {
+    if (question && selectedValue.valueOne) {
       setTraitsScoreOne([
         ...traitsScoreOne,
         { [question.trait]: selectedValue.valueOne },
@@ -102,13 +77,22 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
         ...traitsScoreTwo,
         { [question.trait]: selectedValue.valueTwo },
       ]);
-    } else {
+    } else if (!question) {
       GetQuestion();
     }
   }, [question]);
 
   useEffect(() => {
-    if (currentIndex === -1) {
+    if (currentIndex === -2) {
+      debugger;
+      setTraitsScoreOne([
+        ...traitsScoreOne,
+        { [question.trait]: selectedValue.valueOne },
+      ]);
+      setTraitsScoreTwo([
+        ...traitsScoreTwo,
+        { [question.trait]: selectedValue.valueTwo },
+      ]);
       sumAllTraits(traitsScoreOne, setOptionOne);
       sumAllTraits(traitsScoreTwo, setOptionTwo);
     }
@@ -116,7 +100,7 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
 
   return (
     <>
-      {question && currentIndex > -1 ? (
+      {question && currentIndex > -2 ? (
         <form onSubmit={questionSubmit} onChange={traitCalculation}>
           <h2>{question.question}</h2>
           <h3>{optionOne.name}</h3>
@@ -128,7 +112,7 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
           </button>
         </form>
       ) : (
-        <h2>sohjtis</h2>
+        <h2>sohjtis</h2> /*edut herre the final score*/
       )}
     </>
   );
@@ -140,30 +124,35 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
           type="radio"
           name={group}
           value="1"
-          // checked={selectedValue[group] === "1"}
+          checked={selectedValue[group] === 1}
         />
         <label>Strongly Disagree </label>
         <input
           type="radio"
           name={group}
           value="2"
-          // checked={selectedValue[group] === "2"}
+          checked={selectedValue[group] === 2}
         />
         <label>Disagree </label>
-        <input type="radio" name={group} value="3" checked={true} />
+        <input
+          type="radio"
+          name={group}
+          value="3"
+          checked={selectedValue[group] === 3}
+        />
         <label>Neutral </label>
         <input
           type="radio"
           name={group}
           value="4"
-          // checked={selectedValue[group] === "4"}
+          checked={selectedValue[group] === 4}
         />
         <label>Agree </label>
         <input
           type="radio"
           name={group}
           value="5"
-          // checked={selectedValue[group] === "5"}
+          checked={selectedValue[group] === 5}
         />
         <label>Strongly Agree</label>
       </>
