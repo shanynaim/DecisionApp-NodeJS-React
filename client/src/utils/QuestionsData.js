@@ -1,9 +1,5 @@
 const decisionQuestions = [
   {
-    trait: "dummy",
-    question: "dummy",
-  },
-  {
     trait: "extraversion",
     question: "Involves interactions and connections with others",
   },

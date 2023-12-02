@@ -1,5 +1,9 @@
 const profilling = [
   {
+    trait: "dummy",
+    question: "dummy",
+  },
+  {
     trait: "extraversion",
     question: "I enjoy being around people",
   },

@@ -4,9 +4,9 @@ import Questions from "../utils/QuestionsData";
 function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
   // const questionsArray = Questions;
   const [questionsArray, setQuestionsArray] = useState(Questions);
-  const [currentIndex, setCurrentIndex] = useState(Questions.length - 1);
-  const [isDone, setIsDone] = useState(false);
-  const [question, setQuestion] = useState(GetQuestion);
+  const [currentIndex, setCurretIndex] = useState(questionsArray.length - 1);
+
+  const [question, setQuestion] = useState(null);
   const [traitsScoreOne, setTraitsScoreOne] = useState([]);
   const [traitsScoreTwo, setTraitsScoreTwo] = useState([]);
 
@@ -15,19 +15,8 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
     valueTwo: null,
   });
 
-  function setNextQuestion() {
-    setTraitsScoreOne([
-      ...traitsScoreOne,
-      { [question.trait]: selectedValue.valueOne },
-    ]);
-    setTraitsScoreTwo([
-      ...traitsScoreTwo,
-      { [question.trait]: selectedValue.valueTwo },
-    ]);
-    setQuestion(GetQuestion());
-  }
-
   function GetQuestion() {
+    // debugger;
     const random = Math.floor(Math.random() * currentIndex);
 
     [questionsArray[currentIndex], questionsArray[random]] = [
@@ -36,11 +25,13 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
     ];
 
     let tmp = questionsArray[currentIndex];
-    setCurrentIndex((prevIndex) => prevIndex - 1);
-    return tmp;
+
+    setCurretIndex(currentIndex - 1);
+    setQuestion(tmp);
   }
 
   function traitCalculation(e) {
+    // debugger;
     const score = Number(e.target.value);
 
     let copy = { ...selectedValue };
@@ -50,29 +41,12 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
 
   const questionSubmit = (e) => {
     e.preventDefault();
-    setTraitsScoreOne([
-      ...traitsScoreOne,
-      { [question.trait]: selectedValue.valueOne },
-    ]);
-    setTraitsScoreTwo([
-      ...traitsScoreTwo,
-      { [question.trait]: selectedValue.valueTwo },
-    ]);
-    debugger;
-    setIsDone(true);
 
     e.target.reset();
   };
 
-  useEffect(() => {
-    if (isDone) {
-      debugger;
-      sumAllTraits(traitsScoreOne, setOptionOne);
-      sumAllTraits(traitsScoreTwo, setOptionTwo);
-    }
-  }, [isDone]);
-
   const sumAllTraits = (traitsScore, setOption) => {
+    debugger;
     console.log(traitsScore);
     let results = {
       openness: 0,
@@ -90,32 +64,56 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
     });
 
     setOption(results);
-    debugger;
-    setCurrentIndex(currentIndex - 1);
   };
+
+  useEffect(() => {
+    // debugger;
+    if (question && selectedValue.valueOne) {
+      setTraitsScoreOne([
+        ...traitsScoreOne,
+        { [question.trait]: selectedValue.valueOne },
+      ]);
+      setTraitsScoreTwo([
+        ...traitsScoreTwo,
+        { [question.trait]: selectedValue.valueTwo },
+      ]);
+    } else if (!question) {
+      GetQuestion();
+    }
+  }, [question]);
+
+  useEffect(() => {
+    if (currentIndex === -2) {
+      debugger;
+      setTraitsScoreOne([
+        ...traitsScoreOne,
+        { [question.trait]: selectedValue.valueOne },
+      ]);
+      setTraitsScoreTwo([
+        ...traitsScoreTwo,
+        { [question.trait]: selectedValue.valueTwo },
+      ]);
+      sumAllTraits(traitsScoreOne, setOptionOne);
+      sumAllTraits(traitsScoreTwo, setOptionTwo);
+    }
+  }, [currentIndex]);
 
   return (
     <>
-      {currentIndex > -1 && (
-        <form onChange={traitCalculation}>
+      {question && currentIndex > -2 ? (
+        <form onSubmit={questionSubmit} onChange={traitCalculation}>
           <h2>{question.question}</h2>
           <h3>{optionOne.name}</h3>
           {renderRadioButtons("valueOne")}
           <h3>{optionTwo.name}</h3>
           {renderRadioButtons("valueTwo")}
-          <button type="button" onClick={setNextQuestion}>
+          <button type="submit" onClick={GetQuestion}>
             Next
           </button>
         </form>
+      ) : (
+        <h2>sohjtis</h2> /*edut herre the final score*/
       )}
-
-      {currentIndex === -1 && (
-        <form onSubmit={questionSubmit}>
-          <button type="submit">Decision Time</button>
-        </form>
-      )}
-
-      {currentIndex < -1 && <h2>{currentIndex}</h2>}
     </>
   );
 
