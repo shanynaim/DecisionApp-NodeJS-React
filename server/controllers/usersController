@@ -10,7 +10,7 @@ const jwt_secret = process.env.JWT_SECRET;
 
 const signIn = async (req, res) => {
   const { email, password } = req.body;
-
+  let isProfileExist = false;
   if (!email || !password) {
     return res.send(
       new utils.Response(false, { message: "All fields are required" })
@@ -30,13 +30,23 @@ const signIn = async (req, res) => {
     const match = await argon2.verify(user.password, password);
 
     if (match) {
-      const token = jwt.sign({ userEmail: user.email }, jwt_secret, {
-        expiresIn: "365d",
-      });
+      const token = jwt.sign(
+        { userEmail: user?.email, userId: user?._id },
+        jwt_secret,
+        {
+          expiresIn: "365d",
+        }
+      );
+      if (await Profile.findOne({ user_id: user._id })) {
+        isProfileExist = true;
+      }
+
       res.send(
         new utils.Response(true, {
           message: `welcome back ${user.name}`,
           token: token,
+          profile: isProfileExist,
+          id: user?._id,
         })
       );
     } else {
@@ -97,6 +107,7 @@ const profile = async (req, res) => {
   if (!profile || !id) {
     res.send(new utils.Response(false, "All fields required"));
   }
+
   const openness = "openness",
     conscientiousness = "conscientiousness",
     extraversion = "extraversion",

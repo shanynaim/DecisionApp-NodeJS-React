@@ -20,7 +20,9 @@ const calculateScore = async (req, res) => {
   const { userId, optionOne, optionTwo } = req.body;
 
   try {
-    const findProfile = await Profile.findById(userId);
+    // const f = await User.findOne({ email: userId.userId });
+    // const findProfile = await Profile.findOne({ user_id: f._doc._id });
+    const findProfile = await Profile.findOne({ user_id: userId.userId });
 
     if (!findProfile) {
       res.send(new utils.Response(false, "user id doesnt exist"));

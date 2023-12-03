@@ -29,10 +29,21 @@ function Signin({ signIn }) {
       console.log(response);
       setMessage(response.data.data.message);
       if (response.data.ok) {
-        setTimeout(() => {
-          signIn(response.data.data.token);
-          navigate("/decision");
-        }, 1000);
+        if (!response.data.data.profile) {
+          setTimeout(() => {
+            navigate("/profile", {
+              state: {
+                id: response.data.data.id,
+              },
+            });
+          }, 1000);
+        } else {
+          setTimeout(() => {
+            signIn(response.data.data.token);
+            navigate("/decision");
+          }, 1000);
+          // }
+        }
       }
     } catch (error) {
       console.log(error);

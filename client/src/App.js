@@ -41,11 +41,14 @@ function App() {
     console.log(newToken);
     let decodedToken = jose.decodeJwt(newToken);
     console.log(
-      "Email extracted from the JWT token after login: ",
-      decodedToken.userEmail
+      "Email and Id extracted from the JWT token after login: ",
+      decodedToken.userEmail,
+
+      decodedToken.userId
     );
     let user = {
       email: decodedToken.userEmail,
+      id: decodedToken.userId,
     };
 
     setToken(newToken);
@@ -73,7 +76,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route
             path="/decision"
-            element={isLoggedIn ? <Decision /> : <Home />}
+            element={isLoggedIn ? <Decision userId={user?.id} /> : <Home />}
           />
         </Routes>
       </Router>

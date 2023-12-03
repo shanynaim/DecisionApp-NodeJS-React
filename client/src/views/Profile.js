@@ -1,31 +1,39 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import URL from "../utils/config";
+import Questions from "./Questions";
+import data from "../utils/Profilling";
 
 function Profile({ route }) {
   const [message, setMessage] = useState("");
-
-  const navigate = useNavigate();
-  //make the profile!!!! maybe use the same container from the query
-  const [profile, setProfile] = useState({
-    openness: 0,
-    conscientiousness: 0,
-    extraversion: 0,
-    agreeableness: 0,
-    neuroticism: 0,
+  const [traitArray, setTraitArray] = useState({
+    optionOne: [],
   });
+  const [optionOne, setOptionOne] = useState({
+    name: "",
+    scores: {
+      openness: 1,
+      conscientiousness: 1,
+      extraversion: 1,
+      agreeableness: 1,
+      neuroticism: 1,
+    },
+  });
+  const navigate = useNavigate();
+  const [isFinish, setIsFinish] = useState(false);
+
   const { state } = useLocation();
   const { id } = state;
+  // const id = 1;
+  const setters = { optionOne: setOptionOne };
 
-  const SubmitUserData = async (e) => {
-    e.preventDeafult();
-
+  // useEffect(() => {
+  const SubmitUserData = async () => {
     try {
-      debugger;
       const res = await axios.post(`${URL}/users/signup/profile`, {
         id: id,
-        profile: profile,
+        profile: optionOne.scores,
       });
 
       setMessage(res.data.data.message);
@@ -40,11 +48,24 @@ function Profile({ route }) {
     }
   };
 
+  //   if (isFinish) {
+  //     SubmitUserData();
+  //   }
+  // }, [isFinish]);
+
   return (
     <>
       <h1>in profiling</h1>
       <button onClick={SubmitUserData}>submit</button>
-
+      {/* <Questions
+        data={data}
+        validation={"profile"}
+        setIsFinish={setIsFinish}
+        setters={setters}
+        traitArray={traitArray}
+        setTraitArray={setTraitArray} */}
+      {/* // optionOne={optionOne} */}
+      {/* /> */}
       <h4>{message}</h4>
     </>
   );

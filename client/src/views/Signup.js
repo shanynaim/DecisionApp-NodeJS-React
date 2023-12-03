@@ -11,6 +11,7 @@ function Signup() {
     password1: "",
     password2: "",
   });
+
   const changeForm = (e) => {
     const formCopy = { ...form };
     formCopy[e.target.name] = e.target.value;

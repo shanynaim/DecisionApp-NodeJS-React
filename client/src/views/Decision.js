@@ -1,8 +1,10 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import axios from "axios";
 import Questions from "./Questions";
 
-function Decision() {
+function Decision(userId) {
+  const [message, setMessage] = useState(null);
+  const [isFinish, setIsFinish] = useState(false);
   const [start, setStart] = useState(false);
   const [optionOne, setOptionOne] = useState({
     name: "",
@@ -16,10 +18,37 @@ function Decision() {
   });
   const [optionTwo, setOptionTwo] = useState({
     name: "",
-    scores: {},
+    scores: {
+      openness: 0,
+      conscientiousness: 0,
+      extraversion: 0,
+      agreeableness: 0,
+      neuroticism: 0,
+    },
   });
+  useEffect(() => {
+    const getProfile = async () => {
+      try {
+        const respond = await axios.post(`${URL}/decision/calculateScore`, {
+          userId,
+          optionOne: optionOne,
+          optionTwo: optionTwo,
+        });
+        debugger;
+        if (respond.data.ok) {
+          setMessage(respond.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (isFinish) {
+      getProfile();
+    }
+  }, [isFinish]);
 
   const setOptionChange = (e) => {
+    debugger;
     if (e.target.id === "1") {
       const optionCopy = { ...optionOne };
       optionCopy[e.target.name] = e.target.value;
@@ -33,6 +62,7 @@ function Decision() {
   };
 
   const startSubmit = (e) => {
+    debugger;
     e.preventDefault();
     setStart(true);
   };
@@ -54,6 +84,7 @@ function Decision() {
       ) : (
         <div>
           <Questions
+            setIsFinish={setIsFinish}
             optionOne={optionOne}
             optionTwo={optionTwo}
             setOptionOne={setOptionOne}
@@ -61,6 +92,7 @@ function Decision() {
           />
         </div>
       )}
+      {message && <h1>message</h1>}
     </>
   );
 }

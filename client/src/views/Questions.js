@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import Questions from "../utils/QuestionsData";
 
-function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
+function QueryQuestions({
+  optionOne,
+  optionTwo,
+  setOptionOne,
+  setOptionTwo,
+  setIsFinish,
+}) {
   // const questionsArray = Questions;
   const [questionsArray, setQuestionsArray] = useState(Questions);
   const [currentIndex, setCurrentIndex] = useState(Questions.length - 1);
@@ -70,6 +76,7 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
       sumAllTraits(traitsScoreOne, setOptionOne);
       sumAllTraits(traitsScoreTwo, setOptionTwo);
     }
+    setIsFinish(true);
   }, [isDone]);
 
   const sumAllTraits = (traitsScore, setOption) => {
@@ -90,7 +97,7 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
     });
 
     setOption(results);
-    debugger;
+
     setCurrentIndex(currentIndex - 1);
   };
 
@@ -114,8 +121,6 @@ function QueryQuestions({ optionOne, optionTwo, setOptionOne, setOptionTwo }) {
           <button type="submit">Decision Time</button>
         </form>
       )}
-
-      {currentIndex < -1 && <h2>{currentIndex}</h2>}
     </>
   );
 
