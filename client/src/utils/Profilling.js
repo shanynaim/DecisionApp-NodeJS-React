@@ -9,9 +9,9 @@ const profilling = [
   },
   {
     trait: "extraversion",
-    question: "I feel comfortable in group settings and parties.",
+    question: "I feel comfortable in group settings and parties",
   },
-  { trait: "extraversion", question: "I am outgoing and talkative." },
+  { trait: "extraversion", question: "I am outgoing and talkative" },
   {
     trait: "extraversion",
     question: "I prefer socializing activities over solitary",
@@ -58,7 +58,7 @@ const profilling = [
   },
   {
     trait: "agreeableness",
-    question: "I enjoy helping others and offering support.",
+    question: "I enjoy helping others and offering support",
   },
   {
     trait: "agreeableness",
@@ -66,7 +66,7 @@ const profilling = [
   },
   {
     trait: "agreeableness",
-    question: "I am considerate of others' feelings",
+    question: "I am considerate of others feelings",
   },
   {
     trait: "agreeableness",
@@ -88,7 +88,7 @@ const profilling = [
     trait: "neuroticism",
     question: "I am easily stressed or anxious",
   },
-  { trait: "neuroticism", question: ". I often feel tense and nervous" },
+  { trait: "neuroticism", question: "I often feel tense and nervous" },
   { trait: "neuroticism", question: "I often get irritated or upset" },
 ];
 

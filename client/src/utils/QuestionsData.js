@@ -5,16 +5,16 @@ const decisionQuestions = [
   },
   {
     trait: "extraversion",
-    question: "Has excitement and stimulation of social environments.",
+    question: "Has excitement and stimulation of social environments",
   },
   {
     trait: "extraversion",
-    question: "Involves dynamic and fast-paced social situations.",
+    question: "Involves dynamic and fast-paced social situations",
   },
-  { trait: "extraversion", question: "Require to speak infant of audiences" },
+  { trait: "extraversion", question: "Require to speak infront of audiences" },
   {
     trait: "extraversion",
-    question: "Involves collaborative and interactive experiences.",
+    question: "Involves collaborative and interactive experiences",
   },
   {
     trait: "openness",
@@ -22,31 +22,31 @@ const decisionQuestions = [
   },
   {
     trait: "openness",
-    question: "Allows exploration of diverse perspectives and ideas.",
+    question: "Allows exploration of diverse perspectives and ideas",
   },
   {
     trait: "openness",
-    question: "It is unconventional and the extraordinary.",
+    question: "It is unconventional and the extraordinary",
   },
   {
     trait: "openness",
-    question: "Requires philosophical and abstract thinking.",
+    question: "Requires philosophical and abstract thinking",
   },
   {
     trait: "openness",
-    question: "Involves discovering new facets of oneself and the world.",
+    question: "Involves discovering new facets of oneself and the world",
   },
   {
     trait: "conscientiousness",
-    question: "Requires a strong sense of duty and responsibility.",
+    question: "Requires a strong sense of duty and responsibility",
   },
   {
     trait: "conscientiousness",
-    question: "Has a clear sense of purpose and direction.",
+    question: "Has a clear sense of purpose and direction",
   },
   {
     trait: "conscientiousness",
-    question: "Requires high discipline and focused approach to tasks.",
+    question: "Requires high discipline and focused approach to tasks",
   },
   {
     trait: "conscientiousness",
@@ -59,11 +59,11 @@ const decisionQuestions = [
   { trait: "agreeableness", question: "Requires empathy and compassion" },
   {
     trait: "agreeableness",
-    question: "There is a need in genuine interest in the well-being of others",
+    question: "Requires in genuine interest in the well-being of others",
   },
   {
     trait: "agreeableness",
-    question: "cooperation and teamwork is more important then competition",
+    question: "Requires cooperation and teamwork",
   },
   {
     trait: "agreeableness",
@@ -78,7 +78,7 @@ const decisionQuestions = [
   {
     trait: "neuroticism",
     question:
-      "Requires to be highly attuned to personal emotions and those of others.",
+      "Requires to be highly attuned to personal emotions and those of others",
   },
   { trait: "neuroticism", question: "Includes emotional explorations" },
   { trait: "neuroticism", question: "Not a challenging environment" },

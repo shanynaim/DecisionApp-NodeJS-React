@@ -10,62 +10,65 @@ function Profile({ route }) {
   const [traitArray, setTraitArray] = useState({
     optionOne: [],
   });
+  const [optionsArray, setOptionsArray] = useState(() => []);
   const [optionOne, setOptionOne] = useState({
     name: "",
-    scores: {
-      openness: 1,
-      conscientiousness: 1,
-      extraversion: 1,
-      agreeableness: 1,
-      neuroticism: 1,
-    },
+    scores: {},
   });
   const navigate = useNavigate();
   const [isFinish, setIsFinish] = useState(false);
 
   const { state } = useLocation();
   const { id } = state;
-  // const id = 1;
-  const setters = { optionOne: setOptionOne };
 
-  // useEffect(() => {
-  const SubmitUserData = async () => {
-    try {
-      const res = await axios.post(`${URL}/users/signup/profile`, {
-        id: id,
-        profile: optionOne.scores,
-      });
+  useEffect(() => {
+    setOptionsArray([
+      {
+        name: optionOne.name,
+        optionOne,
+        setter: setOptionOne,
+        queryScores: [],
+        currentValue: 0,
+      },
+    ]);
+  }, [optionOne]);
 
-      setMessage(res.data.data.message);
+  useEffect(() => {
+    if (isFinish) {
+      const SubmitUserData = async () => {
+        try {
+          const res = await axios.post(`${URL}/users/signup/profile`, {
+            id: id,
+            profile: optionOne.scores,
+          });
 
-      if (res.data.ok) {
-        setTimeout(() => {
-          navigate("/signin");
-        }, 1000);
-      }
-    } catch (error) {
-      console.log(error);
+          setMessage(res.data.data.message);
+
+          if (res.data.ok) {
+            setTimeout(() => {
+              navigate("/signin");
+            }, 1000);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      SubmitUserData();
     }
-  };
-
-  //   if (isFinish) {
-  //     SubmitUserData();
-  //   }
-  // }, [isFinish]);
+  }, [isFinish]);
 
   return (
     <>
       <h1>in profiling</h1>
-      <button onClick={SubmitUserData}>submit</button>
-      {/* <Questions
-        data={data}
-        validation={"profile"}
-        setIsFinish={setIsFinish}
-        setters={setters}
-        traitArray={traitArray}
-        setTraitArray={setTraitArray} */}
-      {/* // optionOne={optionOne} */}
-      {/* /> */}
+
+      <div>
+        <Questions
+          setIsFinish={setIsFinish}
+          optionsArray={optionsArray}
+          setOptionsArray={setOptionsArray}
+          data={data}
+        />
+      </div>
       <h4>{message}</h4>
     </>
   );

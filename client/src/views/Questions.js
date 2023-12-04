@@ -1,16 +1,12 @@
 import { useState, useEffect } from "react";
-import Questions from "../utils/QuestionsData";
 
-function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray }) {
-  const [questionsArray, setQuestionsArray] = useState(Questions);
-  const [currentIndex, setCurrentIndex] = useState(Questions.length - 1);
+function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
+  const dataSize = data.length;
+  const [questionNumber, setQuestionNumber] = useState(0);
+  const [questionsArray, setQuestionsArray] = useState(data);
+  const [currentIndex, setCurrentIndex] = useState(dataSize - 1);
   const [isDone, setIsDone] = useState(false);
   const [question, setQuestion] = useState(GetQuestion);
-
-  const [selectedValue, setSelectedValue] = useState({
-    optionOne: null,
-    optionTwo: null,
-  });
 
   function setNextQuestion() {
     let copy = optionsArray;
@@ -33,6 +29,7 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray }) {
 
     let tmp = questionsArray[currentIndex];
     setCurrentIndex((prevIndex) => prevIndex - 1);
+    setQuestionNumber((prevIndex) => prevIndex + 1);
     return tmp;
   }
 
@@ -51,13 +48,6 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray }) {
   const questionSubmit = (e) => {
     e.preventDefault();
 
-    let copy = optionsArray;
-    copy.forEach((option) => {
-      option.queryScores.push({ [question.trait]: option.currentValue });
-    });
-
-    setOptionsArray(copy);
-
     setIsDone(true);
 
     e.target.reset();
@@ -71,12 +61,13 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray }) {
       });
       setOptionsArray(copy);
 
-      setIsFinish(true);
+      setTimeout(() => {
+        setIsFinish(true);
+      }, 200);
     }
   }, [isDone]);
 
   const sumAllTraits = (traitsScore, setOption, name) => {
-    console.log(traitsScore);
     let results = {
       openness: 0,
       conscientiousness: 0,
@@ -99,13 +90,13 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray }) {
 
   return (
     <>
-      {currentIndex > -1 && (
+      {currentIndex > -2 && (
         <form onChange={traitCalculation}>
           <h2>{question.question}</h2>
           {optionsArray.map((option) => {
             return (
               <div>
-                <h3>{option.name}</h3> {renderRadioButtons(option)};
+                <h3>{option.name}</h3> {renderRadioButtons(option)}
               </div>
             );
           })}
@@ -113,12 +104,15 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray }) {
           <button type="button" onClick={setNextQuestion}>
             Next
           </button>
+          <h6>
+            {questionNumber}/{dataSize}
+          </h6>
         </form>
       )}
 
-      {currentIndex === -1 && (
+      {currentIndex === -2 && (
         <form onSubmit={questionSubmit}>
-          <button type="submit">Decision Time</button>
+          <button type="submit">Submit my answers!</button>
         </form>
       )}
     </>
