@@ -43,7 +43,11 @@ function Signup() {
     }
   };
   return (
-    <form onSubmit={submitForm} onChange={changeForm}>
+    <form
+      onSubmit={submitForm}
+      onChange={changeForm}
+      className="Signup_container"
+    >
       <label>Name</label>
       <input name="name" />
       <label>Email</label>

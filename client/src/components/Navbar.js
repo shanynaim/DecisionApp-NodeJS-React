@@ -8,7 +8,11 @@ function Navbar({ signOut }) {
         <Link to="/">Home</Link>
         <Link to="/signin">Sign In</Link>
         <Link to="/signup">Sign Up</Link>
-        <button onClick={signOut}>Sign out</button>
+      </li>
+      <li>
+        <button className="signout-button" onClick={signOut}>
+          Sign out
+        </button>
       </li>
     </ul>
   );

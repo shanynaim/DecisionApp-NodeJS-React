@@ -95,7 +95,7 @@ function Decision({ userId }) {
     <>
       {start ? (
         <>
-          <div>
+          <div className="Decision_container">
             <Questions
               setIsFinish={setIsFinish}
               optionsArray={optionsArray}
@@ -103,10 +103,12 @@ function Decision({ userId }) {
               data={data}
             />
           </div>
-          <button onClick={startOver}>Take another decision</button>
+          <button className="Decision_button" onClick={startOver}>
+            Take another decision
+          </button>
         </>
       ) : (
-        <div>
+        <div className="Decision_container">
           <p>some text about the form of the query</p>
           <form onSubmit={startSubmit} onChange={setOptionChange}>
             <label>option one</label>

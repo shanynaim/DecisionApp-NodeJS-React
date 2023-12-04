@@ -53,15 +53,15 @@ function Signin({ signIn }) {
     <form
       onSubmit={handleSubmit}
       onChange={handleChange}
-      className="form_container"
+      className="Signup_container"
     >
       <label>Email</label>
       <input name="email" />
       <label>Password</label>
       <input name="password" />
       <button>Signin</button>
-      <div className="message">
-        <h4>{message}</h4>
+      <div className="Signup_message">
+        <h2>{message}</h2>
       </div>
     </form>
   );

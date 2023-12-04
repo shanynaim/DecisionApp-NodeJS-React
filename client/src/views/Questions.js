@@ -89,7 +89,7 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
   };
 
   return (
-    <>
+    <div className="Questions">
       {currentIndex > -2 && (
         <form onChange={traitCalculation}>
           <h2>{question.question}</h2>
@@ -115,48 +115,58 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
           <button type="submit">Submit my answers!</button>
         </form>
       )}
-    </>
+    </div>
   );
 
   function renderRadioButtons(group) {
     return (
-      <>
-        <input
-          type="radio"
-          name={group.name}
-          value="1"
-          checked={group["currentValue"] === 1}
-        />
-        <label>Strongly Disagree </label>
-        <input
-          type="radio"
-          name={group.name}
-          value="2"
-          checked={group["currentValue"] === 2}
-        />
-        <label>Disagree </label>
-        <input
-          type="radio"
-          name={group.name}
-          value="3"
-          checked={group["currentValue"] === 3}
-        />
-        <label>Neutral </label>
-        <input
-          type="radio"
-          name={group.name}
-          value="4"
-          checked={group["currentValue"] === 4}
-        />
-        <label>Agree </label>
-        <input
-          type="radio"
-          name={group.name}
-          value="5"
-          checked={group["currentValue"] === 5}
-        />
-        <label>Strongly Agree</label>
-      </>
+      <div className="radio_buttons">
+        <label>
+          <input
+            type="radio"
+            name={group.name}
+            value="1"
+            checked={group.currentValue === 1}
+          />
+          Strongly Disagree
+        </label>
+        <label>
+          <input
+            type="radio"
+            name={group.name}
+            value="2"
+            checked={group.currentValue === 2}
+          />
+          Disagree
+        </label>
+        <label>
+          <input
+            type="radio"
+            name={group.name}
+            value="3"
+            checked={group.currentValue === 3}
+          />
+          Neutral
+        </label>
+        <label>
+          <input
+            type="radio"
+            name={group.name}
+            value="4"
+            checked={group.currentValue === 4}
+          />
+          Agree
+        </label>
+        <label>
+          <input
+            type="radio"
+            name={group.name}
+            value="5"
+            checked={group.currentValue === 5}
+          />
+          Strongly Agree
+        </label>
+      </div>
     );
   }
 }

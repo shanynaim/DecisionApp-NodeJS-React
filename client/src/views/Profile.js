@@ -59,9 +59,7 @@ function Profile({ route }) {
 
   return (
     <>
-      <h1>in profiling</h1>
-
-      <div>
+      <div className="Profile_container">
         <Questions
           setIsFinish={setIsFinish}
           optionsArray={optionsArray}
@@ -69,7 +67,7 @@ function Profile({ route }) {
           data={data}
         />
       </div>
-      <h4>{message}</h4>
+      <h4 className="Signup_message">{message}</h4>
     </>
   );
 }
