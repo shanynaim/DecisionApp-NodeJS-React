@@ -15,6 +15,26 @@ function Decision({ userId }) {
     name: "",
     scores: {},
   });
+  const [optionsArray, setOptionsArray] = useState(() => []);
+  useEffect(() => {
+    setOptionsArray([
+      {
+        name: optionOne.name,
+        optionOne,
+        setter: setOptionOne,
+        queryScores: [],
+        currentValue: 0,
+      },
+      {
+        name: optionTwo.name,
+        optionTwo,
+        setter: setOptionTwo,
+        queryScores: [],
+        currentValue: 0,
+      },
+    ]);
+  }, [optionOne, optionTwo]);
+
   useEffect(() => {
     if (isFinish) {
       debugger;
@@ -74,10 +94,12 @@ function Decision({ userId }) {
         <div>
           <Questions
             setIsFinish={setIsFinish}
-            optionOne={optionOne}
-            optionTwo={optionTwo}
-            setOptionOne={setOptionOne}
-            setOptionTwo={setOptionTwo}
+            optionsArray={optionsArray}
+            setOptionsArray={setOptionsArray}
+            // optionOne={optionOne}
+            // optionTwo={optionTwo}
+            // setOptionOne={setOptionOne}
+            // setOptionTwo={setOptionTwo}
           />
         </div>
       )}

@@ -1,35 +1,25 @@
 import { useState, useEffect } from "react";
 import Questions from "../utils/QuestionsData";
 
-function QueryQuestions({
-  optionOne,
-  optionTwo,
-  setOptionOne,
-  setOptionTwo,
-  setIsFinish,
-}) {
-  // const questionsArray = Questions;
+function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray }) {
   const [questionsArray, setQuestionsArray] = useState(Questions);
   const [currentIndex, setCurrentIndex] = useState(Questions.length - 1);
   const [isDone, setIsDone] = useState(false);
   const [question, setQuestion] = useState(GetQuestion);
-  const [traitsScoreOne, setTraitsScoreOne] = useState([]);
-  const [traitsScoreTwo, setTraitsScoreTwo] = useState([]);
 
   const [selectedValue, setSelectedValue] = useState({
-    valueOne: null,
-    valueTwo: null,
+    optionOne: null,
+    optionTwo: null,
   });
 
   function setNextQuestion() {
-    setTraitsScoreOne([
-      ...traitsScoreOne,
-      { [question.trait]: selectedValue.valueOne },
-    ]);
-    setTraitsScoreTwo([
-      ...traitsScoreTwo,
-      { [question.trait]: selectedValue.valueTwo },
-    ]);
+    let copy = optionsArray;
+    copy.forEach((option) => {
+      option.queryScores.push({ [question.trait]: option.currentValue });
+    });
+
+    setOptionsArray(copy);
+
     setQuestion(GetQuestion());
   }
 
@@ -47,23 +37,26 @@ function QueryQuestions({
   }
 
   function traitCalculation(e) {
-    const score = Number(e.target.value);
+    let copy = optionsArray.map((option) => {
+      if (option.name === e.target.name) {
+        return { ...option, currentValue: Number(e.target.value) };
+      } else {
+        return option;
+      }
+    });
 
-    let copy = { ...selectedValue };
-    copy[e.target.name] = score;
-    setSelectedValue(copy);
+    setOptionsArray(copy);
   }
 
   const questionSubmit = (e) => {
     e.preventDefault();
-    setTraitsScoreOne([
-      ...traitsScoreOne,
-      { [question.trait]: selectedValue.valueOne },
-    ]);
-    setTraitsScoreTwo([
-      ...traitsScoreTwo,
-      { [question.trait]: selectedValue.valueTwo },
-    ]);
+
+    let copy = optionsArray;
+    copy.forEach((option) => {
+      option.queryScores.push({ [question.trait]: option.currentValue });
+    });
+
+    setOptionsArray(copy);
 
     setIsDone(true);
 
@@ -72,8 +65,12 @@ function QueryQuestions({
 
   useEffect(() => {
     if (isDone) {
-      sumAllTraits(traitsScoreOne, setOptionOne, optionOne.name);
-      sumAllTraits(traitsScoreTwo, setOptionTwo, optionTwo.name);
+      let copy = optionsArray;
+      copy.forEach((option) => {
+        sumAllTraits(option.queryScores, option.setter, option.name);
+      });
+      setOptionsArray(copy);
+
       setIsFinish(true);
     }
   }, [isDone]);
@@ -105,10 +102,14 @@ function QueryQuestions({
       {currentIndex > -1 && (
         <form onChange={traitCalculation}>
           <h2>{question.question}</h2>
-          <h3>{optionOne.name}</h3>
-          {renderRadioButtons("valueOne")}
-          <h3>{optionTwo.name}</h3>
-          {renderRadioButtons("valueTwo")}
+          {optionsArray.map((option) => {
+            return (
+              <div>
+                <h3>{option.name}</h3> {renderRadioButtons(option)};
+              </div>
+            );
+          })}
+
           <button type="button" onClick={setNextQuestion}>
             Next
           </button>
@@ -128,37 +129,37 @@ function QueryQuestions({
       <>
         <input
           type="radio"
-          name={group}
+          name={group.name}
           value="1"
-          checked={selectedValue[group] === 1}
+          checked={group["currentValue"] === 1}
         />
         <label>Strongly Disagree </label>
         <input
           type="radio"
-          name={group}
+          name={group.name}
           value="2"
-          checked={selectedValue[group] === 2}
+          checked={group["currentValue"] === 2}
         />
         <label>Disagree </label>
         <input
           type="radio"
-          name={group}
+          name={group.name}
           value="3"
-          checked={selectedValue[group] === 3}
+          checked={group["currentValue"] === 3}
         />
         <label>Neutral </label>
         <input
           type="radio"
-          name={group}
+          name={group.name}
           value="4"
-          checked={selectedValue[group] === 4}
+          checked={group["currentValue"] === 4}
         />
         <label>Agree </label>
         <input
           type="radio"
-          name={group}
+          name={group.name}
           value="5"
-          checked={selectedValue[group] === 5}
+          checked={group["currentValue"] === 5}
         />
         <label>Strongly Agree</label>
       </>
