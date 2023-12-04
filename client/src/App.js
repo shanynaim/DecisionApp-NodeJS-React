@@ -63,22 +63,24 @@ function App() {
     <div className="App">
       <Router>
         <Navbar signOut={signout} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/signin"
-            element={isLoggedIn ? <Decision /> : <Signin signIn={signIn} />}
-          />
-          <Route
-            path="/signup"
-            element={isLoggedIn ? <Decision /> : <Signup />}
-          />
-          <Route path="/profile" element={<Profile />} />
-          <Route
-            path="/decision"
-            element={isLoggedIn ? <Decision userId={user?.id} /> : <Home />}
-          />
-        </Routes>
+        <div className="containers-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/signin"
+              element={isLoggedIn ? <Decision /> : <Signin signIn={signIn} />}
+            />
+            <Route
+              path="/signup"
+              element={isLoggedIn ? <Decision /> : <Signup />}
+            />
+            <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/decision"
+              element={isLoggedIn ? <Decision userId={user?.id} /> : <Home />}
+            />
+          </Routes>
+        </div>
       </Router>
     </div>
   );

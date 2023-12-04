@@ -93,14 +93,15 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
       {currentIndex > -2 && (
         <form onChange={traitCalculation}>
           <h2>{question.question}</h2>
-          {optionsArray.map((option) => {
-            return (
-              <div>
-                <h3>{option.name}</h3> {renderRadioButtons(option)}
-              </div>
-            );
-          })}
-
+          <div className="questions-flex">
+            {optionsArray.map((option) => {
+              return (
+                <div>
+                  <h3>{option.name}</h3> {renderRadioButtons(option)}
+                </div>
+              );
+            })}
+          </div>
           <button type="button" onClick={setNextQuestion}>
             Next
           </button>

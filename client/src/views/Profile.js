@@ -60,6 +60,7 @@ function Profile({ route }) {
   return (
     <>
       <div className="Profile_container">
+        <p> some text about the profile</p>
         <Questions
           setIsFinish={setIsFinish}
           optionsArray={optionsArray}

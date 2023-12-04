@@ -59,7 +59,7 @@ function Signup() {
       <input name="password2" />
 
       <button>Sign Up</button>
-      <div>{message}</div>
+      <h2 className="Signup_message">{message}</h2>
     </form>
   );
 }

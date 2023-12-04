@@ -3,25 +3,32 @@
 * {
   list-style: none;
 }
+html,
 body {
-  font-weight: 500;
-  color: #efedf4;
-
-  margin: 0;
-  padding: 0;
-  font-family: "Arial", sans-serif;
-
-  background-image: url("../assets/demo-background-image.avif");
-  background-repeat: cover;
+  height: 100%;
+  /* margin: 0; */
+  background-image: url("../assets/background-images/scott-webb-R5fIqR8nPu0-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
+.containers-content {
+  text-align: center;
 
+  color: white;
+  /* font-weight: 600;
+  text-transform: uppercase; */
+}
+/* .message {
+  padding-top: 20px;
+} */
 .App {
   text-align: center;
 }
 
 /* Navbar Styles */
 .nav {
-  background-color: #3498db;
+  background-color: rgb(175, 120, 118, 0.7);
   overflow: hidden;
   display: flex;
   justify-content: space-between;
@@ -39,21 +46,22 @@ body {
 }
 
 .nav a:hover {
-  background-color: #2980b9;
+  background-color: rgb(179, 76, 87);
 }
 
 .signout-button {
-  background-color: #3498db;
+  background-color: rgb(175, 120, 118, 0);
 
   color: white;
   padding: 10px 15px;
   border: none;
-  border-radius: 4px;
+  /*border-radius: 4px; */
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .signout-button:hover {
+  background-color: rgb(179, 76, 87);
 }
 
 /* Form Container Styles */
@@ -61,7 +69,7 @@ body {
   width: 300px;
   margin: 50px auto;
   padding: 20px;
-  background-color: #3498db;
+  background-color: rgb(175, 120, 118, 0.7);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
@@ -83,7 +91,7 @@ body {
 }
 
 .Signup_container button {
-  background-color: rgb(17, 82, 104);
+  background-color: rgb(175, 120, 118);
   color: white;
   padding: 10px 15px;
   border: none;
@@ -95,7 +103,7 @@ body {
 }
 
 .Signup_container button:hover {
-  background-color: rgb(4, 56, 4);
+  background-color: rgb(179, 76, 87);
 }
 
 .Signup_message {
@@ -105,51 +113,59 @@ body {
 }
 
 /* Additional Styles for Questions Component */
-.Questions {
-  text-align: center;
-  color: #333;
-}
-
 .Questions form {
+  margin: 0 auto;
+  background-color: rgba(175, 120, 118, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  width: 100%; /* Set width to 100% to extend across the container */
+  box-sizing: border-box; /* Include padding and border in the width */
+}
+.questions-flex {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
+  flex-direction: column; /* Updated to column for better alignment */
 }
 
+@media (max-width: 700px) {
+  .Questions form {
+    padding: 10px;
+  }
+
+  .Questions button {
+    padding: 8px 12px;
+  }
+}
 .Questions h2 {
-  font-weight: 600;
-  /* background-image: conic-gradient(
-    #553c9a 0%,
-    #553c9a 33%,
-    #ee4b2b 33%,
-    #ee4b2b 66%,
-    #00c2cb 66%,
-    #00c2cb 99%
-  ); */
-  background-image: repeating-radial-gradient(
-    circle closest-corner at 100px 100px,
-    #553c9a,
-    #b393d3 10%,
-    #553c9a 20%
-  );
-
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
+  margin-bottom: 16px;
+  color: whitesmoke;
 }
 
-/* .Questions div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.Questions div {
   margin-bottom: 16px;
-} */
+}
 
-.Questions button {
-  margin-top: 20px;
-  background-color: #3498db;
-  color: white;
+.Questions .radio_buttons {
+  display: flex;
+  flex-direction: row; /* Updated to row for side-by-side alignment */
+  justify-content: space-evenly;
+}
+
+.Questions label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  color: whitesmoke;
+}
+
+.Questions input {
+  margin-right: 8px;
+}
+
+button {
+  background-color: rgb(179, 76, 87);
+  color: whitesmoke;
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
@@ -157,38 +173,58 @@ body {
   transition: background-color 0.3s;
 }
 
-.Questions button:hover {
-  background-color: #2980b9;
+button:hover {
+  background-color: rgb(113, 42, 49);
 }
 
 .Questions h6 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 0;
-  padding: 8px;
-  background-color: #ddd;
-  border-radius: 4px;
-  color: #333;
+  margin-top: 16px;
+  color: whitesmoke;
 }
-.radio_buttons {
-  /* display: flex;
-  flex-direction: row;
-  justify-content: space-around; */
-}
-.radio_buttons input,
-.radio_buttons label {
-  margin-bottom: 8px;
-}
+
 /* Additional Styles for Decision Component */
 .Decision_container {
   text-align: center;
+  padding: 20px;
 }
 
-.Decision_button {
-  margin-top: 20px;
-  background-color: #3498db;
-  color: white;
+.Decision_container p {
+  margin-bottom: 20px;
+  color: whitesmoke;
+}
+
+.Decision_container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: rgb(175, 120, 118, 0.7);
+
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+
+.Decision_container label {
+  display: block;
+  margin-bottom: 8px;
+  color: whitesmoke;
+}
+
+.Decision_container input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.Decision_container button {
+  background-color: rgb(175, 120, 118);
+  color: whitesmoke;
   padding: 10px 15px;
   border: none;
   border-radius: 4px;
@@ -196,8 +232,8 @@ body {
   transition: background-color 0.3s;
 }
 
-.Decision_button:hover {
-  background-color: #2980b9;
+.Decision_container button:hover {
+  background-color: rgb(179, 76, 87);
 }
 
 /* Additional Styles for Profile Component */

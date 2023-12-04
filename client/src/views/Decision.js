@@ -95,7 +95,7 @@ function Decision({ userId }) {
     <>
       {start ? (
         <>
-          <div className="Decision_container">
+          <div>
             <Questions
               setIsFinish={setIsFinish}
               optionsArray={optionsArray}
