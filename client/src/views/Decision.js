@@ -1,54 +1,44 @@
 import { React, useState, useEffect } from "react";
 import axios from "axios";
 import Questions from "./Questions";
+import URL from "../utils/config";
 
-function Decision(userId) {
+function Decision({ userId }) {
   const [message, setMessage] = useState(null);
   const [isFinish, setIsFinish] = useState(false);
   const [start, setStart] = useState(false);
   const [optionOne, setOptionOne] = useState({
     name: "",
-    scores: {
-      openness: 0,
-      conscientiousness: 0,
-      extraversion: 0,
-      agreeableness: 0,
-      neuroticism: 0,
-    },
+    scores: {},
   });
   const [optionTwo, setOptionTwo] = useState({
     name: "",
-    scores: {
-      openness: 0,
-      conscientiousness: 0,
-      extraversion: 0,
-      agreeableness: 0,
-      neuroticism: 0,
-    },
+    scores: {},
   });
   useEffect(() => {
-    const getProfile = async () => {
-      try {
-        const respond = await axios.post(`${URL}/decision/calculateScore`, {
-          userId,
-          optionOne: optionOne,
-          optionTwo: optionTwo,
-        });
-        debugger;
-        if (respond.data.ok) {
-          setMessage(respond.data.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
     if (isFinish) {
+      debugger;
+      const getProfile = async () => {
+        try {
+          const respond = await axios.post(`${URL}/decision/calculateScore`, {
+            userId,
+            optionOne: optionOne,
+            optionTwo: optionTwo,
+          });
+
+          if (respond.data.ok) {
+            setMessage(respond.data.data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
       getProfile();
     }
   }, [isFinish]);
 
   const setOptionChange = (e) => {
-    debugger;
     if (e.target.id === "1") {
       const optionCopy = { ...optionOne };
       optionCopy[e.target.name] = e.target.value;
@@ -62,7 +52,6 @@ function Decision(userId) {
   };
 
   const startSubmit = (e) => {
-    debugger;
     e.preventDefault();
     setStart(true);
   };
@@ -92,7 +81,12 @@ function Decision(userId) {
           />
         </div>
       )}
-      {message && <h1>message</h1>}
+      {message &&
+        (message === "equal" ? (
+          <h1>Both option are equally good!</h1>
+        ) : (
+          <h1>The best option is: {message}</h1>
+        ))}
     </>
   );
 }

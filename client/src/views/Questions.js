@@ -64,7 +64,7 @@ function QueryQuestions({
       ...traitsScoreTwo,
       { [question.trait]: selectedValue.valueTwo },
     ]);
-    debugger;
+
     setIsDone(true);
 
     e.target.reset();
@@ -72,14 +72,13 @@ function QueryQuestions({
 
   useEffect(() => {
     if (isDone) {
-      debugger;
-      sumAllTraits(traitsScoreOne, setOptionOne);
-      sumAllTraits(traitsScoreTwo, setOptionTwo);
+      sumAllTraits(traitsScoreOne, setOptionOne, optionOne.name);
+      sumAllTraits(traitsScoreTwo, setOptionTwo, optionTwo.name);
+      setIsFinish(true);
     }
-    setIsFinish(true);
   }, [isDone]);
 
-  const sumAllTraits = (traitsScore, setOption) => {
+  const sumAllTraits = (traitsScore, setOption, name) => {
     console.log(traitsScore);
     let results = {
       openness: 0,
@@ -96,7 +95,7 @@ function QueryQuestions({
       results[key] += Number(value);
     });
 
-    setOption(results);
+    setOption({ name: name, scores: results });
 
     setCurrentIndex(currentIndex - 1);
   };
