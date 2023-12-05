@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function Decision({ userId }) {
   const [message, setMessage] = useState(null);
+  const [optionsMessage, setOptionsMessage] = useState(null);
   const [isFinish, setIsFinish] = useState(false);
   const [start, setStart] = useState(false);
   const [optionOne, setOptionOne] = useState({
@@ -76,11 +77,11 @@ function Decision({ userId }) {
   const startSubmit = (e) => {
     e.preventDefault();
     if (!optionOne.name || !optionTwo.name) {
-      setMessage("options can't be empty");
+      setOptionsMessage("options can't be empty");
     } else if (optionOne.name === optionTwo.name) {
-      setMessage("options can't be identical");
+      setOptionsMessage("options can't be identical");
     } else {
-      setMessage(null);
+      setOptionsMessage(null);
       setStart(true);
     }
   };
@@ -89,6 +90,14 @@ function Decision({ userId }) {
     setStart(false);
     setMessage(null);
     setIsFinish(false);
+    setOptionTwo({
+      name: null,
+      scores: {},
+    });
+    setOptionOne({
+      name: null,
+      scores: {},
+    });
   };
 
   return (
@@ -117,14 +126,18 @@ function Decision({ userId }) {
 
             <input id="2" name="name" type="text" />
             <button>Lets start!</button>
+            {optionsMessage && <h1>{optionsMessage}</h1>}
           </form>
         </div>
       )}
+
       {message &&
         (message === "equal" ? (
-          <h1>Both option are equally good!</h1>
+          <h1 className="Decision_final-message">
+            Both option are equally good!
+          </h1>
         ) : (
-          <h1>{message}!</h1>
+          <h1 className="Decision_final-message">{message}!</h1>
         ))}
     </>
   );

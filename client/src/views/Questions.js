@@ -92,28 +92,36 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
     <div className="Questions">
       {currentIndex > -2 && (
         <form onChange={traitCalculation}>
-          <h2>{question.question}</h2>
-          <div className="questions-flex">
-            {optionsArray.map((option) => {
-              return (
-                <div>
-                  <h3>{option.name}</h3> {renderRadioButtons(option)}
-                </div>
-              );
-            })}
+          <div className="Questions_inner">
+            <h1>{question.question}</h1>
+            <h6>
+              {questionNumber}/{dataSize}
+            </h6>
+            <div className="questions-flex">
+              {optionsArray.map((option) => {
+                return (
+                  <div>
+                    <h3>{option.name}</h3> {renderRadioButtons(option)}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <button type="button" onClick={setNextQuestion}>
+          <button
+            className="Questions-next-button"
+            type="button"
+            onClick={setNextQuestion}
+          >
             Next
           </button>
-          <h6>
-            {questionNumber}/{dataSize}
-          </h6>
         </form>
       )}
 
       {currentIndex === -2 && (
-        <form onSubmit={questionSubmit}>
-          <button type="submit">Submit my answers!</button>
+        <form className="Questions_submmit" onSubmit={questionSubmit}>
+          <button type="submit">
+            <h1>Submit my answers!</h1>
+          </button>
         </form>
       )}
     </div>

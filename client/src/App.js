@@ -1,4 +1,5 @@
 import "./App.css";
+import { Helmet } from "react-helmet";
 import * as jose from "jose";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
@@ -61,6 +62,19 @@ function App() {
 
   return (
     <div className="App">
+      <Helmet>
+        <title>Decision Bote App</title>
+        <meta charset="utf-8" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&amp;display=swap"
+        />
+      </Helmet>
       <Router>
         <Navbar signOut={signout} />
         <div className="containers-content">
@@ -68,11 +82,17 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route
               path="/signin"
-              element={isLoggedIn ? <Decision /> : <Signin signIn={signIn} />}
+              element={
+                isLoggedIn ? (
+                  <Decision userId={user?.id} />
+                ) : (
+                  <Signin signIn={signIn} />
+                )
+              }
             />
             <Route
               path="/signup"
-              element={isLoggedIn ? <Decision /> : <Signup />}
+              element={isLoggedIn ? <Decision userId={user?.id} /> : <Signup />}
             />
             <Route path="/profile" element={<Profile />} />
             <Route

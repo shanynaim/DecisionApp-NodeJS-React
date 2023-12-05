@@ -2,6 +2,8 @@
 
 * {
   list-style: none;
+  font-family: "Roboto Mono", monospace;
+  font-weight: 600;
 }
 html,
 body {
@@ -12,16 +14,18 @@ body {
   background-size: cover;
   background-position: center;
 }
+
+h1 {
+  font-family: "Poppins", Sans-serif;
+
+  font-weight: 600;
+}
 .containers-content {
   text-align: center;
 
   color: white;
-  /* font-weight: 600;
-  text-transform: uppercase; */
 }
-/* .message {
-  padding-top: 20px;
-} */
+
 .App {
   text-align: center;
 }
@@ -49,6 +53,11 @@ body {
   background-color: rgb(179, 76, 87);
 }
 
+/*home*/
+.home_text {
+  background-color: rgb(179, 76, 87);
+}
+/* Styles for sign out and sign in Component */
 .signout-button {
   background-color: rgb(175, 120, 118, 0);
 
@@ -113,30 +122,22 @@ body {
 }
 
 /* Additional Styles for Questions Component */
-.Questions form {
+
+.Questions_inner {
   margin: 0 auto;
-  background-color: rgba(175, 120, 118, 0.8);
-  padding: 20px;
-  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
   width: 100%; /* Set width to 100% to extend across the container */
-  box-sizing: border-box; /* Include padding and border in the width */
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: rgba(175, 120, 118, 0.8);
 }
 .questions-flex {
   display: flex;
   flex-direction: column; /* Updated to column for better alignment */
 }
 
-@media (max-width: 700px) {
-  .Questions form {
-    padding: 10px;
-  }
-
-  .Questions button {
-    padding: 8px 12px;
-  }
-}
 .Questions h2 {
   margin-bottom: 16px;
   color: whitesmoke;
@@ -162,6 +163,13 @@ body {
 .Questions input {
   margin-right: 8px;
 }
+.Questions-next-button {
+  position: fixed;
+  bottom: 200px; /* Adjust this value as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+}
 
 button {
   background-color: rgb(179, 76, 87);
@@ -182,6 +190,9 @@ button:hover {
   color: whitesmoke;
 }
 
+.Questions_submmit {
+  padding-top: 250px;
+}
 /* Additional Styles for Decision Component */
 .Decision_container {
   text-align: center;
@@ -241,7 +252,16 @@ button:hover {
   text-align: center;
 }
 
-/* .Profile_message {
-  margin-top: 16px;
-  color: #e74c3c;
-} */
+.Decision_button {
+  position: fixed;
+  bottom: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+}
+
+.Decision_final-message {
+  padding: 10px;
+  background-color: rgb(113, 42, 49);
+  margin-top: 250px;
+}
