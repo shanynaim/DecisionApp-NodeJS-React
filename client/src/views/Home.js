@@ -3,28 +3,6 @@ import { useNavigate } from "react-router-dom";
 function Home() {
   const [userResponse, setUserResponse] = useState(null);
   const [next, setNext] = useState(false);
-  const [text, setText] = useState(`     Hello!
-  I am your new decision bot!
-  I'm here to help you take decisions in your life.
-  It can be minor decisions like going out to a party tonight or taking
-  a chill evening at home, or bigger ones like working as a teacher or a
-  developer.
- 
-  My decision-taking logic is based on the "The five big personality
-  traits" -
-  <a
-    href="https://en.wikipedia.org/wiki/Big_Five_personality_traits"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    a psychological trait theory.
-  </a>
- 
-  This theory has been developed from the 1908s onward through the
-  collaborative efforts of various researchers and psychologists.
- 
-  So... Lets start?`);
-  const [displayedText, setDisplayedText] = useState("");
 
   const navigate = useNavigate();
 
@@ -32,28 +10,10 @@ function Home() {
     setUserResponse(e.target.name);
     setNext(true);
   };
-
-  useEffect(() => {
-    let index = 0;
-
-    const intervalId = setInterval(() => {
-      setDisplayedText((prevText) => prevText + text[index]);
-
-      index++;
-
-      if (index === text.length) {
-        clearInterval(intervalId);
-      }
-    }, 35); // Adjust the delay (in milliseconds) based on your preference
-
-    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
-  }, [text]);
-
   useEffect(() => {
     return () => {
       setUserResponse(null);
       setNext(false);
-      setUserResponse(null);
     };
   }, []);
 
@@ -61,8 +21,28 @@ function Home() {
     <div className="home_text">
       {!next ? (
         <>
-          <h1>Letter-by-Letter Animation Example</h1>
-          return <div>{displayedText}</div>;
+          Hello! <br />
+          I am your new decision bot! <br />
+          I'm here to help you make decisions in your life. <br />
+          It can be minor decisions like going out to a party tonight or taking
+          a chill evening at home, or bigger ones like working as a teacher or a
+          developer. <br />
+          <br />
+          My decision-making logic is based on the "Big Five Personality Traits"
+          -{" "}
+          <a
+            href="https://en.wikipedia.org/wiki/Big_Five_personality_traits"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            a psychological trait theory.
+          </a>
+          <br />
+          This theory has been developed from the 1900s onward through the
+          collaborative efforts of various researchers and psychologists.
+          <br />
+          <br />
+          So... Let's start?
           <form className="home_buttons" onClick={clickHandler}>
             <button name={"yes"}>Yes, I do!</button>
             <button name={"no"}>No way!</button>
@@ -70,27 +50,27 @@ function Home() {
           </form>
         </>
       ) : (
-        <div class="home_user-resonse">
+        <div class="home_user-response">
           {userResponse === "yes" && (
             <>
               <p>
                 Great! <br />
-                This is how it is going to work..
                 <br />
-                At first stage i`ll ask you to fill a profile query with 25
-                questions about you. please answer honestly and what it suits
-                you in most of the times.
+                This is how it is going to work... <br />
+                At the first stage, I'll ask you to fill out a profile
+                questionnaire with 25 questions about you. Please answer
+                honestly and choose what suits you most of the time. <br />
+                Afterward, I will calculate your responses and build your
+                personality profile based on the "Big Five Personality Traits".
                 <br />
-                After, I will calculate your responses and build your
-                personality profile based on the "The five big personality
-                traits". <br />
                 <br />
-                After submitting you profile, any time you`ll have a decision to
-                take, you can signin to yout profile and take the decision
-                query, which contains 25 questions. <br />
-                Based on your responses and yout profile, I will tell you which
-                one of those decision are best option!`
+                After submitting your profile, any time you have a decision to
+                make, you can sign in and take the decision questionnaire, which
+                contains 25 questions. <br />
+                Based on your responses and your profile, I will tell you which
+                one of those decisions is the best option!
               </p>
+
               <button onClick={() => navigate("/signup")}>Lets Start!</button>
             </>
           )}

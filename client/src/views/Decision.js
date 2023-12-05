@@ -118,16 +118,25 @@ function Decision({ userId }) {
         </>
       ) : (
         <div className="Decision_container">
-          <p>some text about the form of the query</p>
-          <form onSubmit={startSubmit} onChange={setOptionChange}>
-            <label>option one</label>
-            <input id="1" name="name" type="text" />
-            <label>option two</label>
+          <p className="Decision_text">
+            Please provide your two options below. <br />
+            For instance, 'going to the park' or 'traveling to Spain,' etc.
+            <br />
+            <br />
+            Afterward, I will present phrases for each option, and you will need
+            to score how well each sentence aligns with each option.
+          </p>
+          <div className="Decision_inner-container">
+            <form onSubmit={startSubmit} onChange={setOptionChange}>
+              <label>OPTION ONE</label>
+              <input id="1" name="name" type="text" />
+              <label>OPTION TWO</label>
 
-            <input id="2" name="name" type="text" />
-            <button>Lets start!</button>
-            {optionsMessage && <h1>{optionsMessage}</h1>}
-          </form>
+              <input id="2" name="name" type="text" />
+              <button>LETS START!</button>
+              {optionsMessage && <h1>{optionsMessage}</h1>}
+            </form>
+          </div>
         </div>
       )}
 

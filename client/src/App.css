@@ -32,7 +32,7 @@ h1 {
 
 /* Navbar Styles */
 .nav {
-  background-color: rgb(175, 120, 118, 0.7);
+  background-color: rgb(221, 159, 80, 0.8);
   overflow: hidden;
   display: flex;
   justify-content: space-between;
@@ -50,14 +50,20 @@ h1 {
 }
 
 .nav a:hover {
-  background-color: rgb(179, 76, 87);
+  background-color: rgb(221, 159, 80);
 }
 
 /*home*/
 .home_text {
-  background-color: rgb(179, 76, 87);
+  background-color: rgb(199, 142, 117, 0.9);
+  padding-top: 10px;
 }
-
+.home_buttons button {
+  margin: 30px 10px;
+}
+.home_user-response {
+  padding: 20px 0px;
+}
 /* Add this to your CSS file */
 
 /* @keyframes robotWalking {
@@ -91,7 +97,7 @@ h1 {
 
 /* Styles for sign out and sign in Component */
 .signout-button {
-  background-color: rgb(175, 120, 118, 0);
+  background-color: rgb(221, 159, 80, 0);
 
   color: white;
   padding: 10px 15px;
@@ -102,7 +108,7 @@ h1 {
 }
 
 .signout-button:hover {
-  background-color: rgb(179, 76, 87);
+  background-color: rgb(221, 159, 80);
 }
 
 /* Form Container Styles */
@@ -110,7 +116,7 @@ h1 {
   width: 300px;
   margin: 50px auto;
   padding: 20px;
-  background-color: rgb(175, 120, 118, 0.7);
+  background-color: rgb(199, 142, 117, 0.9);
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
@@ -155,7 +161,7 @@ h1 {
 
 /* Additional Styles for Questions Component */
 
-.Questions_inner {
+.Questions {
   margin: 0 auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
@@ -163,7 +169,7 @@ h1 {
   box-sizing: border-box;
   border-radius: 8px;
   padding: 20px;
-  background-color: rgba(175, 120, 118, 0.8);
+  background-color: rgb(199, 142, 117, 0.9);
 }
 .questions-flex {
   display: flex;
@@ -176,7 +182,7 @@ h1 {
 }
 
 .Questions div {
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .Questions .radio_buttons {
@@ -184,27 +190,66 @@ h1 {
   flex-direction: row; /* Updated to row for side-by-side alignment */
   justify-content: space-evenly;
 }
+/* Add this to your CSS file */
 
+/* Add this to your CSS file */
+
+@media only screen and (max-width: 700px) {
+  .Questions label {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .Questions input[type="radio"] {
+    margin-right: 12px; /* Increase the margin to add more gap */
+  }
+
+  .Questions label:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+.Questions-next-button {
+  position: fixed;
+  bottom: 150px; /* Adjust this value as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 999;
+}
 .Questions label {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
   color: whitesmoke;
+  background: rgb(199, 142, 117);
+  background: linear-gradient(
+    to right bottom,
+    rgb(199, 142, 117),
+    /* Adjust the percentage for the second color stop */ rgb(171, 91, 99)
+  );
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .Questions input {
   margin-right: 8px;
 }
-.Questions-next-button {
-  position: fixed;
-  bottom: 200px; /* Adjust this value as needed */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 999;
+
+.Questions label:hover {
+  background: rgb(179, 76, 87);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 16px rgba(0, 0, 0, 0.3);
+}
+
+.Questions input[type="radio"] {
+  /* display: none; */
 }
 
 button {
-  background-color: rgb(179, 76, 87);
+  background-color: rgb(175, 120, 118);
+
   color: whitesmoke;
   padding: 10px 15px;
   border: none;
@@ -214,7 +259,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(113, 42, 49);
+  background-color: rgb(179, 76, 87);
 }
 
 .Questions h6 {
@@ -226,23 +271,23 @@ button:hover {
   padding-top: 250px;
 }
 /* Additional Styles for Decision Component */
-.Decision_container {
+.Decision_inner-container {
   text-align: center;
   padding: 20px;
 }
 
-.Decision_container p {
+.Decision_inner-container p {
   margin-bottom: 20px;
   color: whitesmoke;
 }
 
-.Decision_container form {
+.Decision_inner-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   max-width: 400px;
   margin: 0 auto;
-  background-color: rgb(175, 120, 118, 0.7);
+  background-color: rgb(199, 142, 117, 0.9);
 
   padding: 20px;
   border-radius: 8px;
@@ -250,13 +295,13 @@ button:hover {
   transition: box-shadow 0.3s;
 }
 
-.Decision_container label {
+.Decision_inner-container label {
   display: block;
   margin-bottom: 8px;
   color: whitesmoke;
 }
 
-.Decision_container input {
+.Decision_inner-container input {
   width: 100%;
   padding: 10px;
   margin-bottom: 16px;
@@ -264,8 +309,20 @@ button:hover {
   border-radius: 4px;
   box-sizing: border-box;
 }
+.Decision_text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: rgb(199, 142, 117, 0.9);
 
-.Decision_container button {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+.Decision_inner-container button {
   background-color: rgb(175, 120, 118);
   color: whitesmoke;
   padding: 10px 15px;
@@ -275,7 +332,7 @@ button:hover {
   transition: background-color 0.3s;
 }
 
-.Decision_container button:hover {
+.Decision_inner-container button:hover {
   background-color: rgb(179, 76, 87);
 }
 
