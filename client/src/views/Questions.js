@@ -7,6 +7,7 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
   const [currentIndex, setCurrentIndex] = useState(dataSize - 1);
   const [isDone, setIsDone] = useState(false);
   const [question, setQuestion] = useState(GetQuestion);
+  const [multiQuestions, setMultiQuestions] = useState(false);
 
   function setNextQuestion() {
     let copy = optionsArray;
@@ -52,6 +53,11 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
 
     e.target.reset();
   };
+  useEffect(() => {
+    if (optionsArray.length > 1) {
+      setMultiQuestions(true);
+    }
+  });
 
   useEffect(() => {
     if (isDone) {
@@ -92,28 +98,34 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
     <div className="Questions">
       {currentIndex > -2 && (
         <form onChange={traitCalculation}>
-          <h3>This option....</h3>
-          <h1>{question.question}</h1>
-          <h6>
-            {questionNumber}/{dataSize}
-          </h6>
-          <div className="questions-flex">
-            {optionsArray.map((option) => {
-              return (
-                <div>
-                  <h3>{option.name}</h3> {renderRadioButtons(option)}
-                </div>
-              );
-            })}
-          </div>
+          <div className="Questions-inner">
+            <h6>
+              {questionNumber}/{dataSize}
+            </h6>
+            {multiQuestions ? (
+              <h3>This option....</h3>
+            ) : (
+              <h3>How much is this sentence true about you?</h3>
+            )}
+            <h1 className="Question_this">{question.question}</h1>
 
-          <button
-            className="Questions-next-button"
-            type="button"
-            onClick={setNextQuestion}
-          >
-            Next
-          </button>
+            <div className="questions-flex">
+              {optionsArray.map((option) => {
+                return (
+                  <div>
+                    <h3>{option.name}</h3> {renderRadioButtons(option)}
+                  </div>
+                );
+              })}
+            </div>
+            <button
+              className="Questions-next-button"
+              type="button"
+              onClick={setNextQuestion}
+            >
+              Next
+            </button>
+          </div>
         </form>
       )}
 

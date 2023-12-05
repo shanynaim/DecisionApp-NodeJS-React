@@ -39,7 +39,7 @@ function Signup() {
             id: response.data.data.id,
           },
         });
-      }, 1000);
+      }, 2000);
     }
   };
   return (

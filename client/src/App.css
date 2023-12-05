@@ -162,22 +162,40 @@ h1 {
 /* Additional Styles for Questions Component */
 
 .Questions {
+}
+.Questions-inner {
   margin: 0 auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
-  width: 100%; /* Set width to 100% to extend across the container */
+  width: 100%;
+  height: 600px;
+
+  background-attachment: fixed;
   box-sizing: border-box;
   border-radius: 8px;
   padding: 20px;
   background-color: rgb(199, 142, 117, 0.9);
 }
+.Question_this {
+  margin-top: 0;
+  height: 100px;
+}
 .questions-flex {
   display: flex;
-  flex-direction: column; /* Updated to column for better alignment */
+  flex-direction: row;
+  justify-content: space-around;
 }
-
+.Questions h3 {
+  margin-bottom: 0;
+}
 .Questions h2 {
   margin-bottom: 16px;
+  color: whitesmoke;
+}
+.Questions h6 {
+  margin: 0;
+  padding: 0;
+
   color: whitesmoke;
 }
 
@@ -187,7 +205,7 @@ h1 {
 
 .Questions .radio_buttons {
   display: flex;
-  flex-direction: row; /* Updated to row for side-by-side alignment */
+  flex-direction: column; /* Updated to row for side-by-side alignment */
   justify-content: space-evenly;
 }
 /* Add this to your CSS file */
@@ -209,13 +227,13 @@ h1 {
     box-shadow: none;
   }
 }
-.Questions-next-button {
+/* .Questions-next-button {
   position: fixed;
-  bottom: 150px; /* Adjust this value as needed */
+  bottom: 150px; 
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;
-}
+} */
 .Questions label {
   display: flex;
   align-items: center;
@@ -260,11 +278,6 @@ button {
 
 button:hover {
   background-color: rgb(179, 76, 87);
-}
-
-.Questions h6 {
-  margin-top: 16px;
-  color: whitesmoke;
 }
 
 .Questions_submmit {

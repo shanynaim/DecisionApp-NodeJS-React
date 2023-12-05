@@ -92,7 +92,7 @@ const signUp = async (req, res) => {
 
     res.send(
       new utils.Response(true, {
-        message: "User created",
+        message: "User created! Going to profile...",
         id: newUser._id,
       })
     );
