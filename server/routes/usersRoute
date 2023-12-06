@@ -3,7 +3,7 @@ const express = require("express"),
   controller = require("../controllers/usersController");
 
 router.post("/signup", controller.signUp);
-router.post("/signup/profile", controller.profile);
+router.post("/userprofile", controller.profile);
 router.post("/signin", controller.signIn);
 router.post("/verify_token", controller.verifyToken);
 module.exports = router;

@@ -71,7 +71,7 @@ function Home() {
                 one of those decisions is the best option!
               </p>
 
-              <button onClick={() => navigate("/signup")}>Lets Start!</button>
+              <button onClick={() => navigate("/login")}>Lets Start!</button>
             </>
           )}
           {userResponse === "no" && (

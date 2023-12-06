@@ -102,7 +102,7 @@ const signUp = async (req, res) => {
   }
 };
 
-const profile = async (req, res) => {
+const userprofile = async (req, res) => {
   const { profile, id } = req.body;
   if (!profile || !id) {
     res.send(new utils.Response(false, "All fields required"));
@@ -139,4 +139,4 @@ function verifyToken(req, res) {
   });
 }
 
-module.exports = { signUp, signIn, verifyToken, profile };
+module.exports = { signUp, signIn, verifyToken, userprofile };

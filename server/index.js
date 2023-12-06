@@ -5,6 +5,9 @@ const app = express();
 const mongoose = require("mongoose");
 const decisionBotRoute = require("./routes/decisionBotRoute");
 const profileRoute = require("./routes/usersRoute");
+const { auth } = require("express-openid-connect");
+const { requiresAuth } = require("express-openid-connect");
+
 mongoose.set("debug", true);
 
 app.use(express.urlencoded({ extended: true }));
@@ -13,9 +16,40 @@ app.use(cors());
 
 const port = 4050;
 
-app.use("/users", profileRoute);
+const authConfig = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: process.env.AUTH0_CLIENT_SECRET,
+  baseURL: "http://localhost:4050/",
+  // redirectUri: "http://localhost:4050/callback",
+  clientID: process.env.AUTH0_CLIENT_ID,
+  issuerBaseURL: "https://dev-lyojpo6vu545blai.us.auth0.com",
+};
+
+// if (
+//   !authConfig.baseURL &&
+//   !process.env.BASE_URL &&
+//   process.env.PORT &&
+//   process.env.NODE_ENV !== "production"
+// ) {
+//   authConfig.baseURL = `http://localhost:${port}`;
+// } /*understand where it took it from*/
+
+app.use(auth(authConfig));
+app.get("/", (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+    res.redirect("/userprofile"); //
+  } else {
+    res.send("Logged out");
+  }
+  // res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+});
+
+app.get("/profile", requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
+});
+
 app.use("/decision", decisionBotRoute);
-// app.use("/product", productsRoute);
 
 async function connecting() {
   try {

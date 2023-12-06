@@ -6,8 +6,7 @@ function Navbar({ signOut }) {
     <ul className="nav">
       <li>
         <Link to="/">Home</Link>
-        <Link to="/signin">Sign In</Link>
-        <Link to="/signup">Sign Up</Link>
+        <Link to="http://localhost:4050/login">Sign Up</Link>{" "}
       </li>
       <li>
         <button className="signout-button" onClick={signOut}>
