@@ -364,6 +364,6 @@ button:hover {
 
 .Decision_final-message {
   padding: 10px;
-  background-color: rgb(113, 42, 49);
+  background-color: rgb(113, 42, 49, 0.8);
   margin-top: 250px;
 }

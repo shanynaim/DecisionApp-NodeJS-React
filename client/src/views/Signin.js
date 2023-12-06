@@ -27,6 +27,7 @@ function Signin({ signIn }) {
       });
 
       console.log(response);
+
       setMessage(response.data.data.message);
       if (response.data.ok) {
         if (!response.data.data.profile) {
