@@ -1,7 +1,8 @@
 /*******/
 const cors = require("cors");
 const express = require("express");
-const app = express();
+const Profile = require("./modules/profileModule");
+
 const mongoose = require("mongoose");
 const decisionBotRoute = require("./routes/decisionBotRoute");
 const profileRoute = require("./routes/usersRoute");
@@ -9,12 +10,6 @@ const { auth } = require("express-openid-connect");
 const { requiresAuth } = require("express-openid-connect");
 
 mongoose.set("debug", true);
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cors());
-
-const port = 4050;
 
 const authConfig = {
   authRequired: false,
@@ -34,22 +29,47 @@ const authConfig = {
 // ) {
 //   authConfig.baseURL = `http://localhost:${port}`;
 // } /*understand where it took it from*/
+const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
+const port = 4050;
 app.use(auth(authConfig));
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+  debugger;
   if (req.oidc.isAuthenticated()) {
-    res.redirect("/userprofile"); //
-  } else {
-    res.send("Logged out");
-  }
-  // res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
-});
+    const id = req.oidc.user.sub;
+    try {
+      isProfileExist = await Profile.findOne({ user_id: id });
 
+      if (isProfileExist) {
+        res.redirect("http://localhost:3000/decision");
+      } else {
+        res.redirect("http://localhost:3000/profile");
+      }
+    } catch (error) {
+      console.log(error);
+      res.send(new utils.Response(false, { message: "error" + error }));
+    }
+  }
+});
+// app.get('/logout', requiresAuth(), (req, res) => {
+//   // The `id_token` and `access_token` are automatically cleared by `express-openid-connect`
+//   // when the user is logged out.
+//   res.redirect('/');
+// });
 app.get("/profile", requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));
 });
 
 app.use("/decision", decisionBotRoute);
+app.use("/users", profileRoute);
 
 async function connecting() {
   try {

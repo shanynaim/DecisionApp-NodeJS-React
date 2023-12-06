@@ -43,12 +43,33 @@ function Decision({ userId }) {
     if (isFinish) {
       const getProfile = async () => {
         try {
-          const respond = await axios.post(`${URL}/decision/calculateScore`, {
-            userId,
-            optionOne: optionOne,
-            optionTwo: optionTwo,
-          });
-
+          const respond = await axios.post(
+            `${URL}/decision/calculateScore`,
+            {
+              userId,
+              optionOne: optionOne,
+              optionTwo: optionTwo,
+            },
+            {
+              withCredentials: true,
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          /*
+   const res = await axios.post(
+            `${URL}/users/profile`,
+            {
+              profile: optionOne.scores,
+            },
+            {
+              withCredentials: true,
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );*/
           if (respond.data.ok) {
             setMessage(respond.data.data);
           }

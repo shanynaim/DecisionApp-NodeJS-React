@@ -18,9 +18,6 @@ function Profile({ route }) {
   const navigate = useNavigate();
   const [isFinish, setIsFinish] = useState(false);
 
-  const { state } = useLocation();
-  const { id } = state;
-
   useEffect(() => {
     setOptionsArray([
       {
@@ -37,16 +34,24 @@ function Profile({ route }) {
     if (isFinish) {
       const SubmitUserData = async () => {
         try {
-          const res = await axios.post(`${URL}/users/signup/profile`, {
-            id: id,
-            profile: optionOne.scores,
-          });
+          const res = await axios.post(
+            `${URL}/users/profile`,
+            {
+              profile: optionOne.scores,
+            },
+            {
+              withCredentials: true,
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
           setMessage(res.data.data.message);
 
           if (res.data.ok) {
             setTimeout(() => {
-              navigate("/signin");
+              navigate("/decision");
             }, 1000);
           }
         } catch (error) {
@@ -60,7 +65,6 @@ function Profile({ route }) {
   return (
     <>
       <div className="Profile_container">
-        <p> some text about the profile</p>
         <Questions
           setIsFinish={setIsFinish}
           optionsArray={optionsArray}

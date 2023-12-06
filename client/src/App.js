@@ -11,6 +11,7 @@ import Profile from "./views/Profile";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import URL from "./utils/config";
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -95,10 +96,7 @@ function App() {
               element={isLoggedIn ? <Decision userId={user?.id} /> : <Signup />}
             />
             <Route path="/profile" element={<Profile />} />
-            <Route
-              path="/decision"
-              element={isLoggedIn ? <Decision userId={user?.id} /> : <Home />}
-            />
+            <Route path="/decision" element={<Decision />} />
           </Routes>
         </div>
       </Router>

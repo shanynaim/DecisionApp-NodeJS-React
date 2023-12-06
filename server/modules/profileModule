@@ -9,9 +9,8 @@ const profileModule = new Schema({
   neuroticism: { type: Number, required: true, unique: false },
 
   user_id: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
-    ref: "user",
   },
 });
 module.exports = mongoose.model("profile", profileModule);

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 function Home() {
   const [userResponse, setUserResponse] = useState(null);
   const [next, setNext] = useState(false);
@@ -16,6 +17,19 @@ function Home() {
       setNext(false);
     };
   }, []);
+
+  // const startClick = async () => {
+  //   try {
+  //     await axios.get("http://localhost:4050/login", {
+  //       withCredentials: true,
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className="home_text">
@@ -50,7 +64,7 @@ function Home() {
           </form>
         </>
       ) : (
-        <div class="home_user-response">
+        <div className="home_user-response">
           {userResponse === "yes" && (
             <>
               <p>
@@ -70,8 +84,8 @@ function Home() {
                 Based on your responses and your profile, I will tell you which
                 one of those decisions is the best option!
               </p>
-
-              <button onClick={() => navigate("/login")}>Lets Start!</button>
+              <h1>Log In to start!</h1>
+              {/* <button onClick={startClick}>Lets Start!</button> */}
             </>
           )}
           {userResponse === "no" && (

@@ -1,5 +1,5 @@
 const Profile = require("../modules/profileModule");
-const User = require("../modules/userModule");
+
 const utils = require("../utils/helperMethods");
 const { requiresAuth } = require("express-openid-connect");
 
@@ -13,7 +13,7 @@ function calculateForOption(optionData, ProfileData) {
 
 const calculateScore = async (req, res) => {
   const { optionOne, optionTwo } = req.body;
-
+  debugger;
   const isAuthenticated = req.oidc.isAuthenticated();
   if (!isAuthenticated) {
     res
@@ -21,18 +21,13 @@ const calculateScore = async (req, res) => {
       .send(new utils.Response(false, "user is not authenticated"));
   }
 
-  const auth0User = req.oidc.user;
+  const id = req.oidc.user.sub;
 
-  /* TODO
-   1. if !isAuthenticated then throw error 401
-   2. find user: User.findOne({ email: req.oidc.email })
-   3. if no profile is found, create profile or redirect to profile creation
-   */
   try {
-    const findProfile = await Profile.findOne({ user_id: userId });
+    const findProfile = await Profile.findOne({ user_id: id });
 
     if (!findProfile) {
-      res.send(new utils.Response(false, "user id doesnt exist"));
+      res.send(new utils.Response(false, "user profile doesnt exist"));
     } else {
       const optionOneFinal = calculateForOption(
         optionOne.scores,
