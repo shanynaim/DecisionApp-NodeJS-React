@@ -57,22 +57,8 @@ function Decision({ userId }) {
               },
             }
           );
-          /*
-   const res = await axios.post(
-            `${URL}/users/profile`,
-            {
-              profile: optionOne.scores,
-            },
-            {
-              withCredentials: true,
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );*/
-          if (respond.data.ok) {
-            setMessage(respond.data.data);
-          }
+
+          setMessage(respond.data.data);
         } catch (error) {
           console.log(error);
         }

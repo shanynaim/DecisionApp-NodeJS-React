@@ -16,19 +16,10 @@ const authConfig = {
   auth0Logout: true,
   secret: process.env.AUTH0_CLIENT_SECRET,
   baseURL: "http://localhost:4050/",
-  // redirectUri: "http://localhost:4050/callback",
   clientID: process.env.AUTH0_CLIENT_ID,
   issuerBaseURL: "https://dev-lyojpo6vu545blai.us.auth0.com",
 };
 
-// if (
-//   !authConfig.baseURL &&
-//   !process.env.BASE_URL &&
-//   process.env.PORT &&
-//   process.env.NODE_ENV !== "production"
-// ) {
-//   authConfig.baseURL = `http://localhost:${port}`;
-// } /*understand where it took it from*/
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -57,8 +48,22 @@ app.get("/", async (req, res) => {
       console.log(error);
       res.send(new utils.Response(false, { message: "error" + error }));
     }
+  } else {
+    // req.session.destroy();
+
+    res.redirect("http://localhost:3000/");
   }
 });
+// app.get("/logout", (req, res) => {
+//   debugger;
+//   // Clear the user's session data
+//   req.session.destroy();
+
+//   // Redirect to the desired URL after logout
+//   res.redirect("http://localhost:3000/");
+//   // const logoutUrl = `https:///localhost:3000/v2/logout?returnTo=https://localhost:3000/`;
+//   // res.redirect(logoutUrl);
+// });
 // app.get('/logout', requiresAuth(), (req, res) => {
 //   // The `id_token` and `access_token` are automatically cleared by `express-openid-connect`
 //   // when the user is logged out.
@@ -66,7 +71,7 @@ app.get("/", async (req, res) => {
 // });
 app.get("/profile", requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));
-});
+}); /*?????????*/
 
 app.use("/decision", decisionBotRoute);
 app.use("/users", profileRoute);

@@ -3,9 +3,7 @@ const Profile = require("../modules/profileModule");
 
 const utils = require("../utils/helperMethods");
 const mongoose = require("mongoose");
-const argon2 = require("argon2");
-const jwt = require("jsonwebtoken");
-const validator = require("validator");
+
 const { requiresAuth } = require("express-openid-connect");
 
 const profile = async (req, res) => {
@@ -44,108 +42,5 @@ const profile = async (req, res) => {
     res.send(new utils.Response(false, { message: "error" + error }));
   }
 };
-// function verifyToken(req, res) {
-//   console.log(req.headers.authorization);
-//   const token = req.headers.authorization;
-//   jwt.verify(token, jwt_secret, (err, succ) => {
-//     err
-//       ? res.send(new utils.Response(false, { message: "Token is corrupted" }))
-//       : res.send(new utils.Response(true, { message: succ }));
-//   });
-// }
 
-// const signIn = async (req, res) => {
-//   const { email, password } = req.body;
-//   let isProfileExist = false;
-//   if (!email || !password) {
-//     return res.send(
-//       new utils.Response(false, { message: "All fields are required" })
-//     );
-//   }
-//   if (!validator.isEmail(email)) {
-//     return res.send(new utils.Response(false, { message: "Invalid email" }));
-//   }
-
-//   try {
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.send(
-//         new utils.Response(false, { message: "Invalid user provided" })
-//       );
-//     }
-//     const match = await argon2.verify(user.password, password);
-
-//     if (match) {
-//       const token = jwt.sign(
-//         { userEmail: user?.email, userId: user?._id },
-//         jwt_secret,
-//         {
-//           expiresIn: "365d",
-//         }
-//       );
-//       if (await Profile.findOne({ user_id: user._id })) {
-//         isProfileExist = true;
-//       }
-
-//       res.send(
-//         new utils.Response(true, {
-//           message: `welcome back ${user.name}`,
-//           token: token,
-//           profile: isProfileExist,
-//           id: user?._id,
-//         })
-//       );
-//     } else {
-//       res.send(
-//         new utils.Response(false, {
-//           message: `password incorrect`,
-//         })
-//       );
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     res.send(new utils.Response(false, { message: error }));
-//   }
-// };
-
-// const signUp = async (req, res) => {
-//   const { name, email, password1, password2 } = req.body;
-//   if (!name || !email || !password1 || !password2) {
-//     res.send(new utils.Response(false, "All fields required"));
-//   }
-//   if (!validator.isEmail(email)) {
-//     res.send(new utils.Response(false, { message: "Invalid email" }));
-//   }
-
-//   if (password1 !== password2) {
-//     res.send(new utils.Response(false, { message: "passwords dont match!" }));
-//   }
-//   try {
-//     const user = await User.findOne({ email });
-//     if (user) {
-//       return res.send(
-//         new utils.Response(false, { message: "User already exists" })
-//       );
-//     }
-//     const hash = await argon2.hash(password1);
-//     console.log("hash ==>", hash);
-
-//     const newUser = await User.create({
-//       name: name,
-//       email: email,
-//       password: hash,
-//     });
-
-//     res.send(
-//       new utils.Response(true, {
-//         message: "User created! Going to profile...",
-//         id: newUser._id,
-//       })
-//     );
-//   } catch (error) {
-//     console.log(error);
-//     res.send(new utils.Response(false, { message: "error" + error }));
-//   }
-// };
-
-module.exports = { /*(signUp, signIn, verifyToken, */ profile };
+module.exports = { profile };
