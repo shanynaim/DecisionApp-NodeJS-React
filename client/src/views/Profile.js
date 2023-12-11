@@ -60,7 +60,10 @@ function Profile({ route }) {
   return (
     <>
       <div className="Profile_container">
-        <p> some text about the profile</p>
+        <p>
+          Please answer based on what most accurately reflects your behavior
+          most of the time.
+        </p>
         <Questions
           setIsFinish={setIsFinish}
           optionsArray={optionsArray}

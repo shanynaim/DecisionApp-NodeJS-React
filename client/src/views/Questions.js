@@ -57,7 +57,7 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
     if (optionsArray.length > 1) {
       setMultiQuestions(true);
     }
-  });
+  }, []);
 
   useEffect(() => {
     if (isDone) {
@@ -110,9 +110,9 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
             <h1 className="Question_this">{question.question}</h1>
 
             <div className="questions-flex">
-              {optionsArray.map((option) => {
+              {optionsArray.map((option, index) => {
                 return (
-                  <div>
+                  <div key={index}>
                     <h3>{option.name}</h3> {renderRadioButtons(option)}
                   </div>
                 );
