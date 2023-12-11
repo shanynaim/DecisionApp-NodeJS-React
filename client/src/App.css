@@ -242,15 +242,10 @@ h1 {
   align-items: center;
   margin-bottom: 8px;
   color: whitesmoke;
-  background-color: rgb(101, 41, 29, 0.7);
-  background: linear-gradient(
-    to right bottom,
-    rgb(224, 142, 65),
-    rgb(226, 154, 85)
-  );
+
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
