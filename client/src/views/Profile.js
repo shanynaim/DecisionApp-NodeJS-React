@@ -35,7 +35,7 @@ function Profile({ route }) {
       const SubmitUserData = async () => {
         try {
           const res = await axios.post(
-            `${URL}/users/profile`,
+            `${URL}/decision/profile`,
             {
               profile: optionOne.scores,
             },

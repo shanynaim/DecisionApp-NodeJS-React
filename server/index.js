@@ -33,7 +33,6 @@ app.use(
 const port = 4050;
 app.use(auth(authConfig));
 app.get("/", async (req, res) => {
-  debugger;
   if (req.oidc.isAuthenticated()) {
     const id = req.oidc.user.sub;
     try {
@@ -49,32 +48,12 @@ app.get("/", async (req, res) => {
       res.send(new utils.Response(false, { message: "error" + error }));
     }
   } else {
-    // req.session.destroy();
-
     res.redirect("http://localhost:3000/");
   }
 });
-// app.get("/logout", (req, res) => {
-//   debugger;
-//   // Clear the user's session data
-//   req.session.destroy();
-
-//   // Redirect to the desired URL after logout
-//   res.redirect("http://localhost:3000/");
-//   // const logoutUrl = `https:///localhost:3000/v2/logout?returnTo=https://localhost:3000/`;
-//   // res.redirect(logoutUrl);
-// });
-// app.get('/logout', requiresAuth(), (req, res) => {
-//   // The `id_token` and `access_token` are automatically cleared by `express-openid-connect`
-//   // when the user is logged out.
-//   res.redirect('/');
-// });
-app.get("/profile", requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user));
-}); /*?????????*/
 
 app.use("/decision", decisionBotRoute);
-app.use("/users", profileRoute);
+// app.use("/users", profileRoute);
 
 async function connecting() {
   try {
@@ -86,6 +65,10 @@ async function connecting() {
     console.log("error in db conection");
   }
 }
+/*just for testig*/
+app.get("/profile", requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
+});
 
 connecting().then(() => {
   app.listen(port, () => {

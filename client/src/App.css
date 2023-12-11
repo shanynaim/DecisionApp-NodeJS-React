@@ -335,5 +335,12 @@ button:hover {
 .Decision_final-message {
   padding: 10px;
   background-color: rgb(113, 42, 49, 0.8);
+  width: 400px;
   margin-top: 250px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 2px solid transparent;
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.9);
+  animation: shimmer 2s infinite;
 }

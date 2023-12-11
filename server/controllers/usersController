@@ -7,7 +7,6 @@ const mongoose = require("mongoose");
 const { requiresAuth } = require("express-openid-connect");
 
 const profile = async (req, res) => {
-  debugger;
   const isAuthenticated = req.oidc.isAuthenticated();
   if (!isAuthenticated) {
     res
