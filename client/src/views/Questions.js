@@ -146,28 +146,10 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
           <input
             type="radio"
             name={group.name}
-            value="1"
-            checked={group.currentValue === 1}
+            value="5"
+            checked={group.currentValue === 5}
           />
-          Strongly Disagree
-        </label>
-        <label>
-          <input
-            type="radio"
-            name={group.name}
-            value="2"
-            checked={group.currentValue === 2}
-          />
-          Disagree
-        </label>
-        <label>
-          <input
-            type="radio"
-            name={group.name}
-            value="3"
-            checked={group.currentValue === 3}
-          />
-          Neutral
+          Strongly Agree
         </label>
         <label>
           <input
@@ -182,10 +164,28 @@ function QueryQuestions({ optionsArray, setIsFinish, setOptionsArray, data }) {
           <input
             type="radio"
             name={group.name}
-            value="5"
-            checked={group.currentValue === 5}
+            value="3"
+            checked={group.currentValue === 3}
           />
-          Strongly Agree
+          Neutral
+        </label>
+        <label>
+          <input
+            type="radio"
+            name={group.name}
+            value="2"
+            checked={group.currentValue === 2}
+          />
+          Disagree
+        </label>
+        <label>
+          <input
+            type="radio"
+            name={group.name}
+            value="1"
+            checked={group.currentValue === 1}
+          />
+          Strongly Disagree
         </label>
       </div>
     );
