@@ -11,11 +11,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, "../client/build")));
 const port = 4050;
 
 app.use("/users", profileRoute);
 app.use("/decision", decisionBotRoute);
-// app.use("/product", productsRoute);
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+});
 
 async function connecting() {
   try {
