@@ -5,6 +5,7 @@ const app = express();
 const mongoose = require("mongoose");
 const decisionBotRoute = require("./routes/decisionBotRoute");
 const profileRoute = require("./routes/usersRoute");
+const path = require("path");
 mongoose.set("debug", true);
 
 app.use(express.urlencoded({ extended: true }));
