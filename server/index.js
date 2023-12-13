@@ -2,23 +2,15 @@
 const cors = require("cors");
 const express = require("express");
 const Profile = require("./modules/profileModule");
-
+const { authenticationMiddleware } = require("./middleware/authMiddleware");
 const mongoose = require("mongoose");
 const decisionBotRoute = require("./routes/decisionBotRoute");
-const profileRoute = require("./routes/usersRoute");
 const { auth } = require("express-openid-connect");
 const { requiresAuth } = require("express-openid-connect");
+require("dotenv").config();
+const utils = require("./utils/helperMethods");
 
 mongoose.set("debug", true);
-
-const authConfig = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: process.env.AUTH0_CLIENT_SECRET,
-  baseURL: "http://localhost:4050/",
-  clientID: process.env.AUTH0_CLIENT_ID,
-  issuerBaseURL: "https://dev-lyojpo6vu545blai.us.auth0.com",
-};
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -31,7 +23,7 @@ app.use(
 );
 
 const port = 4050;
-app.use(auth(authConfig));
+app.use(authenticationMiddleware);
 app.get("/", async (req, res) => {
   if (req.oidc.isAuthenticated()) {
     const id = req.oidc.user.sub;
@@ -45,7 +37,9 @@ app.get("/", async (req, res) => {
       }
     } catch (error) {
       console.log(error);
-      res.send(new utils.Response(false, { message: "error" + error }));
+      res
+        .status(400)
+        .send(new utils.Response(false, { message: "error" + error }));
     }
   } else {
     res.redirect("http://localhost:3000/");
@@ -53,19 +47,20 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/decision", decisionBotRoute);
-// app.use("/users", profileRoute);
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send("Internal Server Error");
+});
 
 async function connecting() {
   try {
-    await mongoose.connect(
-      "mongodb+srv://shany215sn:9i6dpOi2qYODeMxp@cluster0.fk1u4fq.mongodb.net/decisionApp?retryWrites=true&w=majority"
-    );
+    await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
     console.log("connected to the db");
   } catch (error) {
     console.log("error in db conection");
   }
 }
-/*just for testig*/
+/*just for testing*/
 app.get("/profile", requiresAuth(), (req, res) => {
   res.send(JSON.stringify(req.oidc.user));
 });
