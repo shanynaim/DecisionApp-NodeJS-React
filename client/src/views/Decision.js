@@ -124,7 +124,10 @@ function Decision({ userId }) {
             <br />
             <br />
             Afterward, I will present phrases for each option, and you will need
-            to score how well each sentence aligns with each option.
+            to score how well each sentence aligns with each option. <br />
+            <br />
+            Please note: My decision calculation is only character-based and
+            doesn't consider other parameters like time, money, and so on.
           </p>
           <div className="Decision_inner-container">
             <form onSubmit={startSubmit} onChange={setOptionChange}>
